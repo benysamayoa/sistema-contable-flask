@@ -118,56 +118,6 @@ def jornalizacion():
     return render_template("jornalizacion.html", datos=datos)
 
 # ------------------------
-# DIARIO MAYOR
-# ------------------------
-@app.route("/diario_mayor")
-def diario_mayor():
-
-    if "user" not in session:
-        return redirect("/")
-
-    conn = sqlite3.connect("database.db")
-    cursor = conn.cursor()
-
-    # LIBRO DIARIO
-    cursor.execute("""
-        SELECT 
-            id,
-            fecha,
-            cuenta,
-            debe,
-            haber,
-            descripcion
-        FROM jornalizacion
-    """)
-
-    diario = cursor.fetchall()
-
-    # LIBRO MAYOR
-    cursor.execute("""
-        SELECT 
-            cuenta,
-            SUM(debe) as total_debe,
-            SUM(haber) as total_haber
-        FROM jornalizacion
-        GROUP BY cuenta
-    """)
-
-    mayor = cursor.fetchall()
-
-    conn.close()
-
-    return render_template(
-        "diario_mayor.html",
-        diario=diario,
-        mayor=mayor
-    )
-
-
-
-
-
-# ------------------------
 # Logout
 # ------------------------
 @app.route("/logout")
