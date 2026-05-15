@@ -1,0 +1,428 @@
+﻿CLASIFICACIÓN DE CUENTAS CONTABLES PARA;;;;;;;
+REALIZAR PARTIDAS, HOJAS DE TRABAJO Y;;;;;;;
+ESTADOS FINANCIEROS.;;;;;;;
+No.;CUENTAS CONTABLES;ESTADO DE COSTO DE PRODUCCIÓN;;ESTADO DE RESULTADOS;;ESTADO DE SITUACIÓN FINANCIERA (BALANCE G.);
+;;DEBE;HABER;PÉRDIDA;GANANCIA;ACTIVO;PASIVO
+1;Acciones adquiridas;;;;;;
+2;Acciones no suscritas;;;;;;
+3;Acciones por suscribir;;;;;;
+4;Acciones suscritas;;;;;;
+5;Acreedores;;;;;;
+6;Acreedores a Largo Plazo;;;;;;
+7;Acreedores comerciales;;;;;;
+8;Acreedores Hipotecarios;;;;;;
+9;Acreedores no Comerciales;;;;;;
+10;Acreedorespor Prendas en Garantía;;;;;;
+11;Activos Inservibles;;;;;;
+12;Aguinaldos;;;;;;
+13;Aguinaldos de Administración;;;;;;
+14;Aguinaldos de Fábrica;;;;;;
+15;Aguinaldos Sala de Ventas;;;;;;
+16;Almacén de Envases;;;;;;
+17;Alquiler de Fábrica;;;;;;
+18;Alquiler Sala de Ventas;;;;;;
+19;Alquileres;;;;;;
+20;Alquileres Cobrados;;;;;;
+21;Alquileres Cobrados por Anticipado;;;;;;
+22;Alquileres de Oficinas;;;;;;
+23;Alquileres Devengados;;;;;;
+24;Alquileres Ganados;;;;;;
+25;Alquileres Pagados por Anticipado;;;;;;
+26;Alquileres Percibidos;;;;;;
+27;Alquileres Por pagar;;;;;;
+28;Alquileres Producto;;;;;;
+29;Amortización Crédito Mercantil;;;;;;
+30;Amortización de Patentes;;;;;;
+31;Amortización Derecho de Llave;;;;;;
+32;Amortización Gastos de Constitución;;;;;;
+33;"Amortización Gastos de Instalación de
+Oficina";;;;;;
+34;Amortización Gastos de Organización;;;;;;
+35;"Amortización Gastos Instalación de
+Administración";;;;;;
+36;Amortización Gastos Instalación Fábrica;;;;;;
+37;"Amortización Gastos Instalación Sala de
+Ventas";;;;;;
+38;Amortización Marcas y Patentes;;;;;;
+39;Amortización Renombre Comercial;;;;;;
+40;Amortizaciones Acumuladas (cualquiera);;;;;;
+41;Anticipo a proveedores;;;;;;
+42;Anticipo de clientes;;;;;;
+43;Anticipo sobre compras;;;;;;
+44;Anticipo sobre sueldos;;;;;;
+45;Anticipo sobre ventas;;;;;;
+46;Artículos enviados en consignación;;;;;;
+47;Artículos o productos en proceso I;;;;;;
+48;Artículos o productos en proceso II;;;;;;
+49;Artículos o productos terminados I;;;;;;
+50;Artículos o productos terminados II;;;;;;
+51;Artículos recibidos en consignación;;;;;;
+52;Bancos;;;;;;
+53;Bonificación Incentivo de Fábrica;;;;;;
+54;Bonificación Incentivo Sala de Ventas;;;;;;
+55;Bonificación Inventivo de Administración;;;;;;
+56;Bono 14;;;;;;
+57;Bono 14 de Administración;;;;;;
+58;Bono 14 de Fábrica;;;;;;
+59;Bono 14 por pagar;;;;;;
+60;Bono 14 Sala de Ventas;;;;;;
+61;Bonos Comprados;;;;;;
+62;Bonos Emitidos;;;;;;
+63;Caja;;;;;;
+64;Caja Chica;;;;;;
+65;Caja y Bancos;;;;;;
+66;Capital;;;;;;
+67;Capital Autorizado;;;;;;
+68;Capital Social;;;;;;
+69;Clientes;;;;;;
+70;Combustibles y Lubricantes (Inventario);;;;;;
+71;"Combustibles y Lubricantes Consumidos
+de administración";;;;;;
+72;"Combustibles y Lubricantes consumidos
+fábrica";;;;;;
+73;Comisiones;;;;;;
+74;Comisiones cobradas por anticipado;;;;;;
+75;Comisiones devengadas;;;;;;
+76;Comisiones ganadas;;;;;;
+77;Comisiones gasto;;;;;;
+78;Comisiones pagadas por anticipado;;;;;;
+79;Comisiones percibidas;;;;;;
+80;Comisiones percibidas no devengadas;;;;;;
+81;Comisiones por cobrar;;;;;;
+82;Comisiones por pagar;;;;;;
+83;Comisiones producto;;;;;;
+84;Comisiones sobre ventas;;;;;;
+85;Comitentes por mercaderías;;;;;;
+86;Compras;;;;;;
+87;Compras de Materia Prima;;;;;;
+88;Construcciones;;;;;;
+89;Correo, teléfono y telégrafos;;;;;;
+90;Corresponsales (acreedor);;;;;;
+91;Corresponsales (deudor);;;;;;
+92;Crédito fiscal;;;;;;
+93;Crédito Mercantil;;;;;;
+94;Créditos recuperados;;;;;;
+95;Cristalería (Inventario);;;;;;
+96;Cuenta promesa;;;;;;
+97;Cuentas de difícil cobro;;;;;;
+98;Cuentas dudosas;;;;;;
+99;Cuentas incobrables;;;;;;
+100;Cuentas malas;;;;;;
+101;Cuentas por cobrar comerciales;;;;;;
+102;Cuentas por cobrar no comerciales;;;;;;
+103;Cuentas por pagar;;;;;;
+104;Cuentas por pagar comerciales;;;;;;
+105;Cuentas por pagar no comercilaes;;;;;;
+106;Cuotas laborales;;;;;;
+107;Cuotas laborales por pagar;;;;;;
+108;Cuotas patronales de administración;;;;;;
+109;Cuotas patronales fábrica;;;;;;
+110;Cuotas patronales por pagar;;;;;;
+111;Cuotas patronales sala de ventas;;;;;;
+112;Débito fiscal;;;;;;
+113;Depósitos en Garantía;;;;;;
+114;Depreciación Acumulada de todo activo;;;;;;
+115;Depreciación Construcción de Fábrica;;;;;;
+116;Depreciación Construcción de Oficina;;;;;;
+117;"Depreciación construcción Sala de
+Ventas.";;;;;;
+118;Depreciación Edificios de Oficina;;;;;;
+119;Depreciación Edificios Fábrica;;;;;;
+120;Depreciación Edificios Sala de Ventas;;;;;;
+121;Depreciación Equipo de Computación;;;;;;
+122;Depreciación Herramientas;;;;;;
+123;Depreciación Inmuebles de Oficina;;;;;;
+124;Depreciación Inmuebles Fábrica;;;;;;
+125;Depreciación Inmuebles Sala de Ventas;;;;;;
+126;Depreciación Maquinaria;;;;;;
+127;Depreciación Mobiliario y Equipo Fábrica;;;;;;
+128;Depreciación Sistemas Informáticos;;;;;;
+129;Depreciación Vehículos de Oficina;;;;;;
+130;Depreciación Vehículos Sala de Ventas;;;;;;
+131;Derecho de Llave;;;;;;
+132;Derechos arancelarios de importación;;;;;;
+133;Descuentos Concedidos;;;;;;
+134;Descuentos percibidos;;;;;;
+135;Descuentos sobre acciones;;;;;;
+136;Descuentos sobre compras;;;;;;
+137;"Descuentos sobre compras de materia
+prima";;;;;;
+138;Descuentos sobre ventas;;;;;;
+139;Deudores;;;;;;
+140;Deudores comerciales;;;;;;
+141;Deudores empleados;;;;;;
+142;Deudores no comerciales;;;;;;
+143;Deudores varios;;;;;;
+144;Devoluciones y rebajas sobre compras;;;;;;
+145;"Devoluciones y rebajas sobre compras de
+materia prima";;;;;;
+146;Devoluciones y rebajas sobre ventas;;;;;;
+147;Dividendos ganados;;;;;;
+148;Dividendos no pagados;;;;;;
+149;Dividendos no retirados;;;;;;
+150;Dividendos percibidos;;;;;;
+151;Dividendos por cobrar;;;;;;
+152;Dividendos por pagar;;;;;;
+153;Divisas adquiridas;;;;;;
+154;Documentos por pagar a largo plazo;;;;;;
+155;Documentos descontados;;;;;;
+156;Documentos endosados;;;;;;
+157;Documentos por cobrar a corto plazo;;;;;;
+158;Documentos por cobrar a largo plazo;;;;;;
+159;Documentos por cobrar descontados;;;;;;
+160;Documentos por pagar a corto plazo;;;;;;
+161;Documentos por pagar a largo plazo;;;;;;
+162;Donativos;;;;;;
+163;Donativos pagados;;;;;;
+164;Donativos percibidos;;;;;;
+165;Donativos por pagar;;;;;;
+166;Edificios;;;;;;
+167;Efectos descontados;;;;;;
+168;Efectos endosados;;;;;;
+169;Efectos por cobrar;;;;;;
+170;Efectos por pagar a corto plazo;;;;;;
+171;Efectos por pagar a largo plazo;;;;;;
+172;Energía Eléctrica Administración;;;;;;
+173;Energía Eléctrica Fábrica;;;;;;
+174;Energía Eléctrica Oficina;;;;;;
+175;Energía Eléctrica Sala de Ventas;;;;;;
+176;Envases en Departamento de producción;;;;;;
+177;"Equipo de computación o sistemas
+informáticos";;;;;;
+178;Equipo de reparto;;;;;;
+179;Especies fiscales;;;;;;
+180;Estimación para cuentas de difícil cobro;;;;;;
+181;Estimación para cuentas dudosas;;;;;;
+182;Estimación para cuentas incobrables;;;;;;
+183;Estimación para cuentas malas;;;;;;
+184;Faltante de caja;;;;;;
+185;Fletes sobre compras;;;;;;
+186;Fletes sobre compras de materia prima;;;;;;
+187;Fórmulas patentadas;;;;;;
+188;Fuerza motriz;;;;;;
+189;Fuerza motriz fábrica;;;;;;
+190;Fuerza motriz oficina;;;;;;
+191;Fuerza motriz sala de ventas;;;;;;
+192;Ganancia Antes del impuesto y reserva;;;;;;
+193;Ganancia Después del Impuesto;;;;;;
+194;Ganancia Después del Impuesto y reserva;;;;;;
+195;"Ganancia en Negociación de Activos o
+Ganancia de Capital";;;;;;
+196;Ganancia en venta de activos;;;;;;
+197;Ganancia Post-Impuesto;;;;;;
+198;Ganancia Post-Impuesto y reserva;;;;;;
+199;Ganancia Pre-impuesto;;;;;;
+200;Ganancia Pre-impuesto y reserva;;;;;;
+201;Gastos de constitución;;;;;;
+202;Gastos de instalación;;;;;;
+203;Gastos de instalación fábrica;;;;;;
+204;Gastos de organización;;;;;;
+205;Gastos diversos de administración;;;;;;
+206;Gastos diversos de fábrica;;;;;;
+207;Gastos diversos sala de ventas;;;;;;
+208;Gastos generales;;;;;;
+209;Gastos misceláneos de fábrica;;;;;;
+210;Gastos misceláneos de oficina;;;;;;
+211;Gastos misceláneos sala de ventas;;;;;;
+212;Gastos publicitarios;;;;;;
+213;Gastos sobre compras;;;;;;
+214;Gastos sobre compras de materia prima;;;;;;
+215;Gnanacia Antes del impuesto;;;;;;
+216;Grasas y aceites (inventario);;;;;;
+217;"Grasas y aceites consmidos sala de
+ventas";;;;;;
+218;Grasas y aceites consumidos fábrica;;;;;;
+219;Herramientas;;;;;;
+220;Hipotecas;;;;;;
+221;Hipotecas a corto plazo;;;;;;
+222;Hipotecas a largo plazo;;;;;;
+223;IETAAP por acreditar;;;;;;
+224;IGSS Laboral;;;;;;
+225;IGSS por pagar;;;;;;
+226;Impuesto sobre la renta por pagar;;;;;;
+227;Impuesto sobre la renta retenido;;;;;;
+228;"Impuesto único sobre inmuebles de
+administración";;;;;;
+229;Impuesto único sobre inmuebles fábrica;;;;;;
+230;"Impuesto único sobre inmuebles por
+pagar";;;;;;
+231;"Impuesto único sobre inmuebles sala de
+ventas";;;;;;
+232;Impuestos aduanales sobre compras;;;;;;
+233;"Impuestos aduanales sobre compras de
+materia prima";;;;;;
+234;"Impuestos sobre la renta pagado por
+anticipado";;;;;;
+235;"Impuestos y contribuciones de
+administración";;;;;;
+236;Impuestos y contribuciones fábrica;;;;;;
+237;Impuestos y contribuciones por pagar;;;;;;
+238;"Impuestos y contribuciones sala de
+ventas";;;;;;
+239;Indemnizaciones de administración;;;;;;
+240;Indemnizaciones fábrica;;;;;;
+241;Indemnizaciones sala de ventas;;;;;;
+242;Inmuebles;;;;;;
+243;Intereses cobrados por anticipado;;;;;;
+244;Intereses devengados;;;;;;
+245;Intereses ganados;;;;;;
+246;Intereses gasto;;;;;;
+247;Intereses pagados por anticipado;;;;;;
+248;Intereses percibidos no devengados;;;;;;
+249;Intereses percibidos o producto;;;;;;
+250;Intereses por cobrar;;;;;;
+251;Intereses por pagar;;;;;;
+252;Inventario final de artículos en proceso;;;;;;
+253;Inventario final de artículos terminados;;;;;;
+254;Inventario final de materia prima;;;;;;
+255;Inventario final de mercaderías;;;;;;
+256;Inventario I de artículos en proceso;;;;;;
+257;Inventario I de artículos terminados;;;;;;
+258;Inventario I de materia prima;;;;;;
+259;Inventario I de mercaderías;;;;;;
+260;Inventario II de artículos en proceso;;;;;;
+261;Inventario II de artículos terminados;;;;;;
+262;Inventario II de materia prima;;;;;;
+263;Inventario II de mercaderías;;;;;;
+264;Inventario inicial de artículos en proceso;;;;;;
+265;Inventario inicial de artículos terminados;;;;;;
+266;Inventario inicial de materia prima;;;;;;
+267;Inventario inicial de mercaderías;;;;;;
+268;Inversiones;;;;;;
+269;Inversiones a corto plazo;;;;;;
+270;Inversiones a largo plazo;;;;;;
+271;Inversiones en valores;;;;;;
+272;Inversiones en valores a corto plazo;;;;;;
+273;ISR trimestral;;;;;;
+274;IVA acreditable;;;;;;
+275;IVA acreedor;;;;;;
+276;IVA debitable;;;;;;
+277;IVA deudor;;;;;;
+278;IVA por acreditar;;;;;;
+279;IVA por cobrar;;;;;;
+280;IVA por debitar;;;;;;
+281;IVA por pagar;;;;;;
+282;IVA retenido sobre facturas especiales;;;;;;
+283;Mano de obra directa;;;;;;
+284;Mano de obra indirecta;;;;;;
+285;Maquinaria;;;;;;
+286;Marcas y patentes;;;;;;
+287;Materi prima en tránsito;;;;;;
+288;Materia prima destruida;;;;;;
+289;Materia prima en aduana;;;;;;
+290;Materia prima estropeada;;;;;;
+291;Materia prima final;;;;;;
+292;Materia prima I;;;;;;
+293;Materia prima II;;;;;;
+294;Materia prima inicial;;;;;;
+295;Materia prima inservible;;;;;;
+296;Material de empaque consumido;;;;;;
+297;Material de empaque consumido fábrica;;;;;;
+298;Material de empaque en existencia;;;;;;
+299;Mercaderías en aduana;;;;;;
+300;Mercaderías en camino;;;;;;
+301;Mercaderías en transito;;;;;;
+302;Mercaderías enviadas en consignación;;;;;;
+303;Mercaderías final;;;;;;
+304;Mercaderías I;;;;;;
+305;Mercaderías II;;;;;;
+306;Mercaderías inicial;;;;;;
+307;Mercaderías inservibles o estropeadas;;;;;;
+308;Mercaderías recibidas en consignación;;;;;;
+309;Mobiliario y equipo;;;;;;
+310;Multas y recargos;;;;;;
+311;Papelería y útiles consumidos;;;;;;
+312;Papelería y útiles en existencia;;;;;;
+313;Patentes;;;;;;
+314;Pérdida de capital;;;;;;
+315;Pérdida de ejercicios anteriores;;;;;;
+316;Pérdida en negociación de activos;;;;;;
+317;Pérdidal del ejercicio;;;;;;
+318;Pérdidas acumuladas;;;;;;
+319;Préstamos bancarios;;;;;;
+320;Préstamos bancarios a corto plazo;;;;;;
+321;Préstamos bancarios a largo plazo;;;;;;
+322;Prima sobre acciones;;;;;;
+323;Primas de seguro no vencidas;;;;;;
+324;Primas de seguro vencidas;;;;;;
+325;"Primas de seguro vencidas de
+administración";;;;;;
+326;Primas de Seguro vencidas fábrica;;;;;;
+327;Primas de seguro vencidas sala de ventas;;;;;;
+328;Productos percibidos no devengados;;;;;;
+329;Productos por cobrar;;;;;;
+330;Propaganda;;;;;;
+331;Propaganda pagada por anticipado;;;;;;
+332;Proveedores;;;;;;
+333;Proveeduría en existencia;;;;;;
+334;Provisión para cuentas de difícil cobro;;;;;;
+335;Provisión para cuentas incobrables;;;;;;
+336;Provisión para cuentas malas;;;;;;
+337;Provisión para cuentas morosas;;;;;;
+338;Publicidad;;;;;;
+339;Publicidad pagada por anticipado;;;;;;
+340;Recuperación de créditos;;;;;;
+341;Regalías;;;;;;
+342;Regalías percibidas;;;;;;
+343;Renombre comercial;;;;;;
+344;"Reparación y mantenimiento de
+vehículos";;;;;;
+345;"Repración y mantenimiento de
+maquinaria";;;;;;
+346;Repuestos y accesorios consumidos;;;;;;
+347;Repuestos y accesorios en existencia;;;;;;
+348;Reserva legal;;;;;;
+349;Reserva para cuentas de difícil cobro;;;;;;
+350;Reserva para cuentas incobrables;;;;;;
+351;Reserva para cuentas malas;;;;;;
+352;Reserva para cuentas morosas;;;;;;
+353;Reserva para indemnizaciones;;;;;;
+354;Retención del impuesto sobre la renta;;;;;;
+355;Retenciones laborales;;;;;;
+356;Seguros;;;;;;
+357;Seguros anticipados;;;;;;
+358;Seguros no vencidos;;;;;;
+359;Seguros pagados por anticipado;;;;;;
+360;Seguros vencidos;;;;;;
+361;Seguros vencidos de administración;;;;;;
+362;Seguros vencidos de fábrica;;;;;;
+363;Seguros vencidos sala de ventas;;;;;;
+364;Señor X cuenta particular;;;;;;
+365;Señor X cuenta personal;;;;;;
+366;"Sistemas informáticos o equipo de
+computación";;;;;;
+367;Sobrantes de caja;;;;;;
+368;Socio X cuenta particular acreedor;;;;;;
+369;Socio X cuenta particular deudor;;;;;;
+370;Socio X cuenta personal acreedor;;;;;;
+371;Socio X cuenta personal deudor;;;;;;
+372;Socio X cuenta promesa;;;;;;
+373;Sueldos de administración;;;;;;
+374;Sueldos de vendedores;;;;;;
+375;Sueldos pagados por anticipado;;;;;;
+376;Sueldos por pagar;;;;;;
+377;Sueldos sala de ventas;;;;;;
+378;Suministros consumidos de oficina;;;;;;
+379;Suministros consumidos fábrica;;;;;;
+380;Suministros consumidos sala de ventas;;;;;;
+381;Suministros existencia;;;;;;
+382;Superávit acumulado;;;;;;
+383;Superávit revaluación de activos;;;;;;
+384;Suscriptores de acciones;;;;;;
+385;Terrenos;;;;;;
+386;Timbre de prensa;;;;;;
+387;Timbre de prensa retenido;;;;;;
+388;Útiles y enseres consumidos;;;;;;
+389;Útiles y enseres en existencia;;;;;;
+390;Utilidad del ejercicio;;;;;;
+391;Utilidad por distribuir;;;;;;
+392;Utilidades no distribuidas;;;;;;
+393;Utilidades retenidas;;;;;;
+394;Valores mobiliarios;;;;;;
+395;Valores mobiliarios a largo plazo;;;;;;
+396;Valores mobilidarios a corto plazo;;;;;;
+397;Vehículos;;;;;;
+398;Vehículos de reparto;;;;;;
+399;Ventas;;;;;;
+400;Ventas por realizar;;;;;;
+401;Viáticos;;;;;;
