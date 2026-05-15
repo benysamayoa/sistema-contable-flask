@@ -1,58 +1,37 @@
 import pandas as pd
 
-nombres_columnas = [
-    'No', 'Cuenta', 'Costo_Debe', 'Costo_Haber', 
-    'Perdida', 'Ganancia', 'Activo', 'Pasivo'
-]
+try:
 
-df_cuentas = pd.read_csv('CLASIFICACION-CUENTAS.csv', skiprows=4 names=nombres_columnas,sep=";", encoding="latin1")
+    cuentas = pd.read_csv('CLASIFICACION-CUENTAS.csv', 
+                         sep=";", 
+                         encoding="latin1", 
+                         skiprows=5, 
+                         header=None)
 
-catalogo = {}
+   
+    print("--- Procesando Cuentas Contables ---")
 
-for index, fila in df_cuentas.iterrows():
-    nombre_cuenta = str(fila['Cuenta']).strip()
+    for index, fila in cuentas.iterrows():
     
-    if pd.isna(nombre_cuenta) or nombre_cuenta == 'nan':
-        continue
-        
-    tipo = "Desconocido"
-    if pd.notna(fila['Activo']):
-        tipo = "Activo"
-    elif pd.notna(fila['Pasivo']):
-        tipo = "Pasivo"
-    elif pd.notna(fila['Perdida']):
-        tipo = "Pérdida (Estado de Resultados)"
-    elif pd.notna(fila['Ganancia']):
-        tipo = "Ganancia (Estado de Resultados)"
-    elif pd.notna(fila['Costo_Debe']) or pd.notna(fila['Costo_Haber']):
-        tipo = "Costo de Producción"
-        
-    catalogo[nombre_cuenta] = tipo
+        nombre_cuenta = str(fila[1]).strip()
 
-def sugerir_cuentas(texto):
-    """Devuelve una lista de cuentas que coincidan con el texto ingresado"""
-    sugerencias = []
-    for cuenta in catalogo.keys():
-        if texto.lower() in cuenta.lower():
-            sugerencias.append(cuenta)
-    return sugerencias
+        if nombre_cuenta == 'nan' or nombre_cuenta == '':
+            continue
 
-def procesar_cuenta(cuenta_ingresada):
-    """Valida si la cuenta existe y dice qué tipo es"""
-    if cuenta_ingresada in catalogo:
-        tipo = catalogo[cuenta_ingresada]
-        print(f"✅ Éxito: Seleccionaste '{cuenta_ingresada}'. Es una cuenta de {tipo}.")
-    else:
-        print(f"❌ Error: La cuenta '{cuenta_ingresada}' no es válida.")
+        tipo = "Desconocido"
+    
+        if pd.notna(fila[6]):
+            tipo = "Activo"
+        elif pd.notna(fila[7]):
+            tipo = "Pasivo"
+        elif len(fila) > 8 and pd.notna(fila[8]): # Verificamos si existe la col 8
+            tipo = "Capital"
+        elif pd.notna(fila[4]):
+            tipo = "Pérdida"
+        elif pd.notna(fila[5]):
+            tipo = "Ganancia"
 
+        print(f"Cuenta: {nombre_cuenta} -> Clasificación: {tipo}")
 
-print("--- PRUEBA DE SUGERENCIAS ---")
-
-print("Si escribo 'acreedor', me sugiere:")
-print(sugerir_cuentas("acreedor"))
-
-print("\n--- PRUEBA DE VALIDACIÓN ---")
-# Usamos cuentas que se ven en tu foto
-procesar_cuenta("Acciones por suscribir") 
-procesar_cuenta("Acreedores a Largo Plazo") 
-procesar_cuenta("Cuenta Inventada")
+except Exception as e:
+    print(f"Error: {e}")
