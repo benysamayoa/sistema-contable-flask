@@ -41,3 +41,27 @@ def obtener_jornalizacion():
 
     conexion.close()
     return datos
+# =========================
+# OBTENER LIBRO MAYOR
+# =========================
+
+def obtener_mayor():
+
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    SELECT
+        cuenta,
+        SUM(debe) as total_debe,
+        SUM(haber) as total_haber
+    FROM jornalizacion
+    GROUP BY cuenta
+    """)
+
+    datos = cursor.fetchall()
+
+    conn.close()
+
+    return datos
+
