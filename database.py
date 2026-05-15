@@ -1,8 +1,15 @@
 import sqlite3
 
+DB_NAME = "database.db"
+
+# =========================
+# CREAR BASE DE DATOS
+# =========================
+
 def crear_base_datos():
-    conexion = sqlite3.connect("Jornalizacion.db")
-    cursor = conexion.cursor()
+
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
 
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS jornalizacion (
@@ -15,32 +22,53 @@ def crear_base_datos():
     )
     """)
 
-    conexion.commit()
-    conexion.close()
+    conn.commit()
+    conn.close()
 
+# =========================
+# GUARDAR JORNALIZACION
+# =========================
 
 def guardar_jornalizacion(fecha, cuenta, debe, haber, descripcion):
-    conexion = sqlite3.connect("Jornalizacion.db")
-    cursor = conexion.cursor()
+
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
 
     cursor.execute("""
-    INSERT INTO jornalizacion (fecha, cuenta, debe, haber, descripcion)
+    INSERT INTO jornalizacion
+    (fecha, cuenta, debe, haber, descripcion)
     VALUES (?, ?, ?, ?, ?)
-    """, (fecha, cuenta, debe, haber, descripcion))
+    """, (
+        fecha,
+        cuenta,
+        debe,
+        haber,
+        descripcion
+    ))
 
-    conexion.commit()
-    conexion.close()
+    conn.commit()
+    conn.close()
 
+# =========================
+# OBTENER LIBRO DIARIO
+# =========================
 
 def obtener_jornalizacion():
-    conexion = sqlite3.connect("Jornalizacion.db")
-    cursor = conexion.cursor()
 
-    cursor.execute("SELECT * FROM jornalizacion")
+    conn = sqlite3.connect(DB_NAME)
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    SELECT id, fecha, cuenta, debe, haber, descripcion
+    FROM jornalizacion
+    """)
+
     datos = cursor.fetchall()
 
-    conexion.close()
+    conn.close()
+
     return datos
+
 # =========================
 # OBTENER LIBRO MAYOR
 # =========================
