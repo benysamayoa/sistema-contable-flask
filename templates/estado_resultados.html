@@ -1,2 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Estado de Resultados</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="p-4">
+
 <h2>Estado de Resultados</h2>
-<a href="/dashboard">Volver</a>
+<a href="/dashboard" class="btn btn-secondary mb-3">Volver</a>
+
+<div class="card p-3 mb-3">
+    <h5>Resumen</h5>
+    <p><strong>Ingresos:</strong> {{ ingresos }}</p>
+    <p><strong>Gastos:</strong> {{ gastos }}</p>
+    <p><strong>Utilidad Neta:</strong> {{ utilidad }}</p>
+</div>
+
+<div class="table-responsive">
+<table class="table table-bordered">
+
+    <thead class="table-dark">
+        <tr>
+            <th>Cuenta</th>
+            <th>Monto</th>
+            <th>Tipo</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for item in resultados %}
+        <tr>
+            <td>{{ item.cuenta }}</td>
+            <td>{{ item.monto }}</td>
+            <td>{{ item.tipo }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+
+<div class="container mt-4">
+
+    <div class="row g-3">
+
+        <!-- JORNALIZACION -->
+        <div class="col-md-3">
+            <a href="/jornalizacion" class="btn btn-primary w-100 p-3">
+                📘 Jornalización
+            </a>
+        </div>
+
+        <!-- DIARIO MAYOR -->
+        <div class="col-md-3">
+            <a href="/diario_mayor" class="btn btn-success w-100 p-3">
+                📖 Diario Mayor
+            </a>
+        </div>
+
+        <!-- BALANCE DE SALDOS -->
+        <div class="col-md-3">
+            <a href="/balance_saldos" class="btn btn-warning w-100 p-3">
+                📊 Balance de Saldos
+            </a>
+        </div>
+
+
+        <!-- ESTADOS FINANCIEROS -->
+        <div class="col-md-3">
+            <a href="/estados_financieros" class="btn btn-secondary w-100 p-3">
+                📋 Estados Financieros
+            </a>
+        </div>
+
+         <!-- BALANCE GENERAL -->
+        <div class="col-md-3">
+            <a href="/balance_general" class="btn btn-dark w-100 p-3">
+                🏦 Balance General
+            </a>
+        </div>
+    
+
+        <!-- ESTADO RESULTADOS -->
+        <div class="col-md-3">
+            <a href="/estado_resultados" class="btn btn-info w-100 p-3">
+                📈 Estado de Resultados
+            </a>
+        </div>
+
+       
+
+    </div>
+
+</div>
+
+</body>
+</html>
