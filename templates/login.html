@@ -1,39 +1,292 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
+
 <head>
-<title>Login</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<style>
-body{
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-background:linear-gradient(135deg,#4e73df,#1cc88a);
-}
-.card{
-width:350px;
-animation:fadeIn 0.7s;
-}
-@keyframes fadeIn{
-from{opacity:0;transform:translateY(20px);}
-to{opacity:1;}
-}
-</style>
+
+    <meta charset="UTF-8">
+
+    <title>Login</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+
+            height:100vh;
+
+            display:flex;
+            justify-content:center;
+            align-items:center;
+
+            background:
+            linear-gradient(
+                135deg,
+                #2563eb,
+                #0f172a
+            );
+
+            overflow:hidden;
+
+            font-family:Arial, Helvetica, sans-serif;
+        }
+
+        /* CIRCULOS FONDO */
+
+        .circulo{
+
+            position:absolute;
+
+            border-radius:50%;
+
+            background:rgba(255,255,255,.08);
+
+            animation:flotar 8s infinite ease-in-out;
+        }
+
+        .c1{
+            width:300px;
+            height:300px;
+            top:-100px;
+            left:-100px;
+        }
+
+        .c2{
+            width:250px;
+            height:250px;
+            bottom:-80px;
+            right:-80px;
+            animation-delay:2s;
+        }
+
+        .c3{
+            width:180px;
+            height:180px;
+            top:50%;
+            left:10%;
+            animation-delay:4s;
+        }
+
+        @keyframes flotar{
+
+            0%{
+                transform:translateY(0px);
+            }
+
+            50%{
+                transform:translateY(-20px);
+            }
+
+            100%{
+                transform:translateY(0px);
+            }
+        }
+
+        /* CARD */
+
+        .login-card{
+
+            position:relative;
+
+            width:400px;
+
+            padding:40px;
+
+            border-radius:25px;
+
+            backdrop-filter:blur(18px);
+
+            background:rgba(255,255,255,.12);
+
+            border:1px solid rgba(255,255,255,.2);
+
+            box-shadow:0 8px 32px rgba(0,0,0,.3);
+
+            color:white;
+
+            animation:entrada .8s ease;
+        }
+
+        @keyframes entrada{
+
+            from{
+                opacity:0;
+                transform:translateY(40px);
+            }
+
+            to{
+                opacity:1;
+                transform:translateY(0);
+            }
+        }
+
+        .logo{
+
+            font-size:60px;
+
+            text-align:center;
+
+            margin-bottom:10px;
+        }
+
+        h2{
+
+            text-align:center;
+
+            margin-bottom:5px;
+
+            font-weight:bold;
+        }
+
+        .sub{
+
+            text-align:center;
+
+            color:#cbd5e1;
+
+            margin-bottom:30px;
+        }
+
+        .form-control{
+
+            height:50px;
+
+            border:none;
+
+            border-radius:12px;
+
+            background:rgba(255,255,255,.15);
+
+            color:white;
+
+            margin-bottom:18px;
+        }
+
+        .form-control::placeholder{
+            color:#e2e8f0;
+        }
+
+        .form-control:focus{
+
+            background:rgba(255,255,255,.2);
+
+            color:white;
+
+            box-shadow:none;
+
+            border:1px solid #60a5fa;
+        }
+
+        .btn-login{
+
+            width:100%;
+
+            height:50px;
+
+            border:none;
+
+            border-radius:12px;
+
+            background:#2563eb;
+
+            font-weight:bold;
+
+            transition:.3s;
+        }
+
+        .btn-login:hover{
+
+            background:#1d4ed8;
+
+            transform:scale(1.02);
+        }
+
+        .link{
+
+            text-align:center;
+
+            margin-top:20px;
+        }
+
+        .link a{
+
+            color:#bfdbfe;
+
+            text-decoration:none;
+        }
+
+        .link a:hover{
+
+            text-decoration:underline;
+        }
+
+    </style>
+
 </head>
+
 <body>
 
-<div class="card p-4 shadow">
-<h3 class="text-center">Login</h3>
+    <!-- DECORACION -->
 
-<form method="POST">
-<input name="username" class="form-control mb-2" placeholder="Usuario">
-<input name="password" type="password" class="form-control mb-3" placeholder="Contraseña">
-<button class="btn btn-primary w-100">Entrar</button>
-</form>
+    <div class="circulo c1"></div>
+    <div class="circulo c2"></div>
+    <div class="circulo c3"></div>
 
-<a href="/register" class="text-center mt-2 d-block">Crear cuenta</a>
-</div>
+    <!-- LOGIN -->
+
+    <div class="login-card">
+
+        <div class="logo">
+            📘
+        </div>
+
+        <h2>
+            Sistema Contable
+        </h2>
+
+        <p class="sub">
+            Inicia sesión para continuar
+        </p>
+
+        <form method="POST">
+
+            <input
+                type="text"
+                name="username"
+                class="form-control"
+                placeholder="Usuario"
+                required
+            >
+
+            <input
+                type="password"
+                name="password"
+                class="form-control"
+                placeholder="Contraseña"
+                required
+            >
+
+            <button class="btn btn-login text-white">
+                Entrar
+            </button>
+
+        </form>
+
+        <div class="link">
+
+            <a href="/register">
+                Crear cuenta
+            </a>
+
+        </div>
+
+    </div>
 
 </body>
 </html>
