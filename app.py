@@ -4,6 +4,8 @@ import hashlib
 from datetime import datetime
 import pandas as pd
 import os
+from collections import defaultdict
+
 
 app = Flask(__name__)
 app.secret_key = "clave_super_segura_123"
@@ -39,6 +41,39 @@ def init_db():
     conn.close()
 
 init_db()
+
+def obtener_balance_saldos():
+    conn = conectar()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT cuenta,
+               SUM(debe),
+               SUM(haber)
+        FROM jornalizacion
+        GROUP BY cuenta
+        ORDER BY cuenta
+    """)
+
+    filas = cursor.fetchall()
+    conn.close()
+
+    datos = []
+
+    for fila in filas:
+        cuenta = fila[0]
+        debe = fila[1] or 0
+        haber = fila[2] or 0
+        saldo = debe - haber
+
+        datos.append({
+            "cuenta": cuenta,
+            "debe": debe,
+            "haber": haber,
+            "saldo": saldo
+        })
+
+    return datos
 
 
 def hash_password(password):
@@ -128,6 +163,8 @@ def sugerir_tipo():
         if str(cuenta["nombre"]).strip().lower() == nombre_buscado:
             return jsonify({"tipo_sugerido": cuenta["tipo"]})
     return jsonify({"tipo_sugerido": "No encontrada"})
+
+
 
 
 @app.route("/jornalizacion", methods=["GET", "POST"])
@@ -261,6 +298,64 @@ def eliminar(id):
     return redirect("/jornalizacion")
 
 
+@app.route("/ver_jornalizacion")
+def ver_jornalizacion():
+    if "user" not in session:
+        return redirect("/")
+
+    fecha = request.args.get("fecha")
+    semana = request.args.get("semana")
+    mes = request.args.get("mes")
+    anio = request.args.get("anio")
+
+    conn = conectar()
+    cursor = conn.cursor()
+
+    query = "SELECT * FROM jornalizacion WHERE 1=1"
+    params = []
+
+    # 📅 FILTRO POR DÍA
+    if fecha:
+        query += " AND fecha = ?"
+        params.append(fecha)
+
+    # 📆 FILTRO POR MES
+    if mes:
+        query += " AND fecha LIKE ?"
+        params.append(f"{mes}%")
+
+    # 🗓 FILTRO POR AÑO
+    if anio:
+        query += " AND fecha LIKE ?"
+        params.append(f"{anio}%")
+
+    # 📊 FILTRO POR SEMANA (simple)
+    if semana:
+        query += " AND strftime('%W', fecha) = ? AND strftime('%Y', fecha) = ?"
+        params.append(semana.split("-W")[1])
+        params.append(semana.split("-W")[0])
+
+    query += " ORDER BY fecha DESC, id DESC"
+
+    cursor.execute(query, params)
+    filas = cursor.fetchall()
+    conn.close()
+
+    datos = []
+    for fila in filas:
+        datos.append({
+            "id": fila[0],
+            "fecha": fila[1],
+            "cuenta": fila[2],
+            "debe": fila[3],
+            "haber": fila[4],
+            "descripcion": fila[5]
+        })
+
+    return render_template("ver_jornalizacion.html", datos=datos)
+
+
+
 @app.route("/diario_mayor")
 def diario_mayor():
     conn = conectar()
@@ -275,18 +370,20 @@ def diario_mayor():
     conn.close()
     return render_template("diario_mayor.html", diario=diario, mayor=mayor)
 
+@app.route("/balance")
+def vista_balance_saldos():
 
-@app.route("/balance_saldos")
-def balance_saldos():
-    conn = conectar()
-    cursor = conn.cursor()
-    cursor.execute("""
-    SELECT cuenta, SUM(debe) as total_debe, SUM(haber) as total_haber, SUM(debe - haber) as saldo
-    FROM jornalizacion GROUP BY cuenta
-    """)
-    balances = cursor.fetchall()
-    conn.close()
-    return render_template("balance_saldos.html", balances=balances)
+    if "user" not in session:
+        return redirect("/")
+
+    datos = obtener_balance_saldos()
+
+    return render_template(
+        "balance_saldos.html",
+        datos=datos
+    )
+
+
 
 
 @app.route("/estado_resultados")
