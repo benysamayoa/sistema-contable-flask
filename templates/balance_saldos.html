@@ -1,94 +1,211 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
+
 <head>
+    <meta charset="UTF-8">
     <title>Balance de Saldos</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+
+        body{
+            background:#f1f5f9;
+            font-family:Arial, Helvetica, sans-serif;
+        }
+
+        .contenedor{
+            max-width:1200px;
+            margin:auto;
+        }
+
+        .card-balance{
+            border:none;
+            border-radius:20px;
+            box-shadow:0 5px 20px rgba(0,0,0,.08);
+            background:white;
+        }
+
+        .titulo{
+            font-weight:bold;
+            color:#0f172a;
+        }
+
+        .subtitulo{
+            color:#64748b;
+        }
+
+        thead{
+            background:#2563eb;
+            color:white;
+        }
+
+        .saldo-positivo{
+            color:#15803d;
+            font-weight:bold;
+        }
+
+        .saldo-negativo{
+            color:#dc2626;
+            font-weight:bold;
+        }
+
+        .topbar{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:25px;
+        }
+
+        .resumen{
+            display:grid;
+            grid-template-columns:repeat(3,1fr);
+            gap:20px;
+            margin-bottom:25px;
+        }
+
+        .card-resumen{
+            background:white;
+            border-radius:20px;
+            padding:20px;
+            box-shadow:0 5px 20px rgba(0,0,0,.08);
+        }
+
+        .card-resumen h5{
+            color:#64748b;
+        }
+
+        .card-resumen h2{
+            font-weight:bold;
+        }
+
+        .debe{
+            color:#15803d;
+        }
+
+        .haber{
+            color:#dc2626;
+        }
+
+        .saldo{
+            color:#2563eb;
+        }
+
+    </style>
 </head>
 
-<body class="p-4">
+<body>
 
-<h2>Balance de Saldos</h2>
-<a href="/dashboard" class="btn btn-secondary mb-3">Volver</a>
+<div class="container py-4 contenedor">
 
-<div class="table-responsive">
-<table class="table table-bordered table-hover">
+    <!-- TOP -->
+    <div class="topbar">
 
-    <thead class="table-dark">
-        <tr>
-            <th>Cuenta</th>
-            <th>Debe</th>
-            <th>Haber</th>
-            <th>Saldo</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        {% for item in balances %}
-        <tr>
-            <td>{{ item.cuenta }}</td>
-            <td>{{ item.debe }}</td>
-            <td>{{ item.haber }}</td>
-            <td>{{ item.saldo }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-
-</table>
-
-<div class="container mt-4">
-
-    <div class="row g-3">
-
-        <!-- JORNALIZACION -->
-        <div class="col-md-3">
-            <a href="/jornalizacion" class="btn btn-primary w-100 p-3">
-                📘 Jornalización
-            </a>
+        <div>
+            <h1 class="titulo">📊 Balance de Saldos</h1>
+            <p class="subtitulo">Resumen contable general del sistema</p>
         </div>
 
-        <!-- DIARIO MAYOR -->
-        <div class="col-md-3">
-            <a href="/diario_mayor" class="btn btn-success w-100 p-3">
-                📖 Diario Mayor
+        <div>
+
+            <a href="/dashboard" class="btn btn-secondary">
+                Dashboard
             </a>
+
+            <a href="/jornalizacion" class="btn btn-primary">
+                Jornalización
+            </a>
+
         </div>
 
-        <!-- BALANCE DE SALDOS -->
-        <div class="col-md-3">
-            <a href="/balance_saldos" class="btn btn-warning w-100 p-3">
-                📊 Balance de Saldos
-            </a>
+    </div>
+
+    <!-- RESUMEN -->
+    <div class="resumen">
+
+        <div class="card-resumen">
+            <h5>Total Debe</h5>
+            <h2 class="debe">
+                Q {{ datos | sum(attribute='debe') | round(2) }}
+            </h2>
         </div>
 
-
-        <!-- ESTADOS FINANCIEROS -->
-        <div class="col-md-3">
-            <a href="/estados_financieros" class="btn btn-secondary w-100 p-3">
-                📋 Estados Financieros
-            </a>
+        <div class="card-resumen">
+            <h5>Total Haber</h5>
+            <h2 class="haber">
+                Q {{ datos | sum(attribute='haber') | round(2) }}
+            </h2>
         </div>
 
-         <!-- BALANCE GENERAL -->
-        <div class="col-md-3">
-            <a href="/balance_general" class="btn btn-dark w-100 p-3">
-                🏦 Balance General
-            </a>
-        </div>
-    
-
-        <!-- ESTADO RESULTADOS -->
-        <div class="col-md-3">
-            <a href="/estado_resultados" class="btn btn-info w-100 p-3">
-                📈 Estado de Resultados
-            </a>
+        <div class="card-resumen">
+            <h5>Saldo General</h5>
+            <h2 class="saldo">
+                Q {{
+                    (
+                        (datos | sum(attribute='debe'))
+                        -
+                        (datos | sum(attribute='haber'))
+                    ) | round(2)
+                }}
+            </h2>
         </div>
 
-       
+    </div>
+
+    <!-- TABLA -->
+    <div class="card-balance p-4">
+
+        <h3 class="mb-4">📚 Cuentas Contables</h3>
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle">
+
+                <thead>
+                    <tr>
+                        <th>Cuenta</th>
+                        <th>Total Debe</th>
+                        <th>Total Haber</th>
+                        <th>Saldo</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for fila in datos %}
+
+                    <tr>
+
+                        <td><strong>{{ fila.cuenta }}</strong></td>
+
+                        <td class="text-success">Q {{ fila.debe }}</td>
+
+                        <td class="text-danger">Q {{ fila.haber }}</td>
+
+                        <td>
+
+                            {% if fila.saldo >= 0 %}
+                                <span class="saldo-positivo">Q {{ fila.saldo }}</span>
+                            {% else %}
+                                <span class="saldo-negativo">Q {{ fila.saldo }}</span>
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
 
     </div>
 
 </div>
 
-
 </body>
 </html>
+
