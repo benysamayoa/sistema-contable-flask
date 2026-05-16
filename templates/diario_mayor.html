@@ -2,110 +2,165 @@
 <html lang="es">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <title>Libro Diario Mayor</title>
+    <title>Diario Mayor</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
+    <style>
+
+        body{
+            background:#f1f5f9;
+            font-family:Arial, Helvetica, sans-serif;
+        }
+
+        .contenedor{
+            max-width:1200px;
+            margin:auto;
+        }
+
+        .card-style{
+            border:none;
+            border-radius:20px;
+            box-shadow:0 5px 20px rgba(0,0,0,.08);
+            background:white;
+        }
+
+        .titulo{
+            font-weight:bold;
+            color:#0f172a;
+        }
+
+        .subtitulo{
+            color:#64748b;
+        }
+
+        thead{
+            background:#1e3a8a;
+            color:white;
+        }
+
+        .topbar{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:25px;
+        }
+
+        .resumen{
+            display:grid;
+            grid-template-columns:repeat(2,1fr);
+            gap:20px;
+            margin-bottom:25px;
+        }
+
+        .card-resumen{
+            background:white;
+            border-radius:20px;
+            padding:20px;
+            box-shadow:0 5px 20px rgba(0,0,0,.08);
+        }
+
+        .debe{
+            color:#15803d;
+            font-weight:bold;
+        }
+
+        .haber{
+            color:#dc2626;
+            font-weight:bold;
+        }
+
+    </style>
 </head>
 
-<body class="bg-light">
+<body>
 
-<div class="container mt-5">
+<div class="container py-4 contenedor">
 
-<div class="card shadow p-4">
+    <!-- TOP -->
+    <div class="topbar">
 
-<h1 class="text-center mb-4">
-    📘 Libro Diario Mayor
-</h1>
+        <div>
+            <h1 class="titulo">📒 Libro Diario Mayor</h1>
+            <p class="subtitulo">Movimientos contables agrupados por cuenta</p>
+        </div>
 
-<a href="/jornalizacion" class="btn btn-secondary mb-4">
-    ⬅ Volver
-</a>
+        <div>
 
-<!-- LIBRO DIARIO -->
+            <a href="/dashboard" class="btn btn-secondary">
+                Dashboard
+            </a>
 
-<h3 class="mb-3">
-    📒 Libro Diario
-</h3>
+            <a href="/balance_saldos" class="btn btn-primary">
+                Balance
+            </a>
 
-<table class="table table-bordered table-striped">
+        </div>
 
-<thead class="table-dark">
+    </div>
 
-<tr>
-    <th>ID</th>
-    <th>Fecha</th>
-    <th>Cuenta</th>
-    <th>Debe</th>
-    <th>Haber</th>
-    <th>Descripción</th>
-</tr>
+    <!-- RESUMEN -->
+    <div class="resumen">
 
-</thead>
+        <div class="card-resumen">
+            <h5>Total Debe</h5>
+            <h2 class="debe">
+                Q {{ mayor | sum(attribute=1) | round(2) }}
+            </h2>
+        </div>
 
-<tbody>
+        <div class="card-resumen">
+            <h5>Total Haber</h5>
+            <h2 class="haber">
+                Q {{ mayor | sum(attribute=2) | round(2) }}
+            </h2>
+        </div>
 
-{% for fila in diario %}
+    </div>
 
-<tr>
+    <!-- TABLA DIARIO -->
+    <div class="card-style p-4">
 
-    <td>{{ fila[0] }}</td>
-    <td>{{ fila[1] }}</td>
-    <td>{{ fila[2] }}</td>
-    <td>Q {{ fila[3] }}</td>
-    <td>Q {{ fila[4] }}</td>
-    <td>{{ fila[5] }}</td>
+        <h3 class="mb-4">📚 Movimientos del Diario</h3>
 
-</tr>
+        <div class="table-responsive">
 
-{% endfor %}
+            <table class="table table-hover align-middle">
 
-</tbody>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Fecha</th>
+                        <th>Cuenta</th>
+                        <th>Debe</th>
+                        <th>Haber</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
 
-</table>
+                <tbody>
 
-<hr>
+                    {% for d in diario %}
 
-<!-- LIBRO MAYOR -->
+                    <tr>
+                        <td>{{ d[0] }}</td>
+                        <td>{{ d[1] }}</td>
+                        <td><strong>{{ d[2] }}</strong></td>
+                        <td class="text-success">Q {{ d[3] }}</td>
+                        <td class="text-danger">Q {{ d[4] }}</td>
+                        <td>{{ d[5] }}</td>
+                    </tr>
 
-<h3 class="mb-3">
-    📊 Libro Mayor
-</h3>
+                    {% endfor %}
 
-<table class="table table-bordered">
+                </tbody>
 
-<thead class="table-primary">
+            </table>
 
-<tr>
-    <th>Cuenta</th>
-    <th>Total Debe</th>
-    <th>Total Haber</th>
-</tr>
+        </div>
 
-</thead>
-
-<tbody>
-
-{% for fila in mayor %}
-
-<tr>
-
-    <td>{{ fila[0] }}</td>
-    <td>Q {{ fila[1] }}</td>
-    <td>Q {{ fila[2] }}</td>
-
-</tr>
-
-{% endfor %}
-
-</tbody>
-
-</table>
-
-</div>
+    </div>
 
 </div>
 
