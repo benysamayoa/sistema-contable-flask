@@ -1,2 +1,118 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
+<head>
+
+   
+
+<div class="mb-3">
+
+    <h5>📊 Filtros de Jornalización</h5>
+
+    <div class="d-flex flex-wrap gap-2 align-items-end">
+
+        <!-- 📅 DÍA -->
+        <form method="GET" action="/ver_jornalizacion" class="d-flex gap-1">
+            <input type="date" name="fecha" class="form-control" style="width: 160px;">
+            <button class="btn btn-primary">Día</button>
+        </form>
+
+
+         <!-- 📊 SEMANA -->
+        <form method="GET" action="/ver_jornalizacion" class="d-flex gap-1">
+            <input type="week" name="semana" class="form-control" style="width: 160px;">
+            <button class="btn btn-warning">Semana</button>
+        </form>
+
+
+        <!-- 📆 MES -->
+        <form method="GET" action="/ver_jornalizacion" class="d-flex gap-1">
+            <input type="month" name="mes" class="form-control" style="width: 160px;">
+            <button class="btn btn-success">Mes</button>
+        </form>
+
+        <!-- 🗓 AÑO -->
+        <form method="GET" action="/ver_jornalizacion" class="d-flex gap-1">
+            <input type="number" name="anio" placeholder="Año (2026)" class="form-control" style="width: 120px;">
+            <button class="btn btn-dark">Año</button>
+        </form>
+
+       
+        <!-- 🔁 TODO -->
+        <a href="/ver_jornalizacion" class="btn btn-secondary">
+            Todo
+        </a>
+
+    </div>
+</div>
+
+
+
+
+
+    <title>Partidas guardadas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="p-4">
+
+<h2>Partidas de Jornalización</h2>
+
+<a href="/jornalizacion" class="btn btn-secondary mb-3">Volver</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Fecha</th>
+            <th>Cuenta</th>
+            <th>Debe</th>
+            <th>Haber</th>
+            <th>Descripción</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for d in datos %}
+        <tr>
+            <td>{{ d.id }}</td>
+            <td>{{ d.fecha }}</td>
+            <td>{{ d.cuenta }}</td>
+            <td>{{ d.debe }}</td>
+            <td>{{ d.haber }}</td>
+            <td>{{ d.descripcion }}</td>
+
+            <td>
+                <a href="/editar/{{ d.id }}" class="btn btn-warning btn-sm">
+                    Editar
+                </a>
+
+                <!-- OPCIONAL: eliminar -->
+                <a href="/eliminar/{{ d.id }}" class="btn btn-danger btn-sm"
+                   onclick="return confirm('¿Seguro que deseas eliminar esta partida?')">
+                    Eliminar
+                </a>
+                <div class="mb-3">
+
+                    <div class="mb-3">
+
+    <h5>📊 Filtros</h5>
+
+    <!-- HOY -->
+    <a href="/ver_jornalizacion?fecha={{ hoy }}" class="btn btn-primary btn-sm">
+        Hoy
+    </a>
+
+    
+    
+
+
+
+
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+</body>
+</html>
