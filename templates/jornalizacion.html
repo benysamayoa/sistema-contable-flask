@@ -42,6 +42,10 @@
                 </div>
             </div>
         </div>
+        
+
+
+        
 
         <div class="card card-minimal p-4 mb-4">
             <h5 class="fw-bold text-secondary mb-3">Estructura de la Partida Actual</h5>
@@ -66,6 +70,7 @@
                 </div>
                 <div id="status_cuadre" class="badge-balance badge bg-success">Partida Cuadrada</div>
             </div>
+            
 
             <div class="row g-2">
                 <div class="col-md-3">
@@ -79,6 +84,10 @@
                 </div>
             </div>
         </div>
+
+        <a href="/ver_jornalizacion" class="btn btn-primary mb-3">
+    Ver partidas guardadas
+</a>
 
         <div class="card card-minimal p-4">
             <h5 class="fw-bold text-secondary mb-3">Registros en Libro Diario</h5>
@@ -229,9 +238,58 @@
                 }
             });
         });
+        
 
         // Setear fecha de hoy por defecto
         document.getElementById('partida_fecha').value = new Date().toISOString().split('T')[0];
     </script>
+
+
+
+
+
+
+<div class="row g-4 mt-4">
+
+    <div class="col-md-2">
+        <a href="/balance"
+        class="btn btn-success w-100 btn-acceso py-3">
+            📊 Balance
+        </a>
+    </div>
+
+    <div class="col-md-2">
+        <a href="/diario_mayor"
+        class="btn btn-warning text-white w-100 btn-acceso py-3">
+            📖 Diario Mayor
+        </a>
+    </div>
+
+    <div class="col-md-2">
+        <a href="/balance_general"
+        class="btn btn-danger w-100 btn-acceso py-3">
+            💼 Balance General
+        </a>
+    </div>
+
+    <div class="col-md-3">
+        <a href="/estado_resultados"
+        class="btn btn-dark w-100 btn-acceso py-3">
+            📈 Estado Resultados
+        </a>
+    </div>
+
+    <div class="col-md-3">
+        <a href="/estados_financieros"
+        class="btn btn-info text-white w-100 btn-acceso py-3">
+            📑 Estados Financieros
+        </a>
+    </div>
+
+</div>
+
+
+
+
 </body>
 </html>
