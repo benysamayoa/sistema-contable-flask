@@ -358,17 +358,37 @@ def ver_jornalizacion():
 
 @app.route("/diario_mayor")
 def diario_mayor():
+
+    fecha = request.args.get("fecha")
+    mes = request.args.get("mes")
+    anio = request.args.get("anio")
+
     conn = conectar()
     cursor = conn.cursor()
-    cursor.execute("SELECT id, fecha, cuenta, debe, haber, descripcion FROM jornalizacion ORDER BY id DESC")
+
+    query = "SELECT * FROM jornalizacion WHERE 1=1"
+    params = []
+
+    if fecha:
+        query += " AND fecha = ?"
+        params.append(fecha)
+
+    if mes:
+        query += " AND fecha LIKE ?"
+        params.append(mes + "%")
+
+    if anio:
+        query += " AND fecha LIKE ?"
+        params.append(anio + "%")
+
+    query += " ORDER BY fecha DESC"
+
+    cursor.execute(query, params)
     diario = cursor.fetchall()
-    cursor.execute("""
-    SELECT cuenta, SUM(debe) as total_debe, SUM(haber) as total_haber, SUM(debe - haber) as saldo
-    FROM jornalizacion GROUP BY cuenta
-    """)
-    mayor = cursor.fetchall()
+
     conn.close()
-    return render_template("diario_mayor.html", diario=diario, mayor=mayor)
+
+    return render_template("diario_mayor.html", diario=diario)
 
 @app.route("/balance")
 def vista_balance_saldos():
@@ -384,32 +404,60 @@ def vista_balance_saldos():
     )
 
 
-
-
 @app.route("/estado_resultados")
 def estado_resultados():
+
+    if "user" not in session:
+        return redirect("/")
+
     conn = conectar()
     cursor = conn.cursor()
+
+    # ingresos (haber)
     cursor.execute("SELECT SUM(haber) FROM jornalizacion")
     ingresos = cursor.fetchone()[0] or 0
+
+    # gastos (debe)
     cursor.execute("SELECT SUM(debe) FROM jornalizacion")
     gastos = cursor.fetchone()[0] or 0
-    utilidad = ingresos - gastos
-    conn.close()
-    return render_template("estado_resultados.html", ingresos=ingresos, gastos=gastos, utilidad=utilidad)
 
+    utilidad = ingresos - gastos
+
+    conn.close()
+
+    return render_template(
+        "estado_resultados.html",
+        ingresos=ingresos,
+        gastos=gastos,
+        utilidad=utilidad
+    )
 
 @app.route("/balance_general")
 def balance_general():
+
+    if "user" not in session:
+        return redirect("/")
+
     conn = conectar()
     cursor = conn.cursor()
+
     cursor.execute("SELECT SUM(debe) FROM jornalizacion")
     activos = cursor.fetchone()[0] or 0
+
     cursor.execute("SELECT SUM(haber) FROM jornalizacion")
     pasivos = cursor.fetchone()[0] or 0
+
     capital = activos - pasivos
+
     conn.close()
-    return render_template("balance_general.html", activos=activos, pasivos=pasivos, capital=capital)
+
+    return render_template(
+        "balance_general.html",
+        activos=activos,
+        pasivos=pasivos,
+        capital=capital
+    )
+
 
 
 @app.route("/estados_financieros")
