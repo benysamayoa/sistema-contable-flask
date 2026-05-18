@@ -1,98 +1,435 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
+
 <head>
-    <title>Estado de Resultados</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<meta charset="UTF-8">
+
+<title>Estado de Resultados</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+body{
+    background:#f1f5f9;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+/* CONTENEDOR */
+
+.container-resultados{
+    max-width:1400px;
+    margin:auto;
+}
+
+/* TOPBAR */
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.titulo{
+    font-size:35px;
+    font-weight:bold;
+    color:#0f172a;
+}
+
+.subtitulo{
+    color:#64748b;
+    font-size:17px;
+}
+
+/* TARJETAS */
+
+.grid-cards{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+    margin-bottom:30px;
+}
+
+.card-finanza{
+    background:white;
+    border-radius:20px;
+    padding:25px;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+    transition:.3s;
+}
+
+.card-finanza:hover{
+    transform:translateY(-5px);
+}
+
+.icono{
+    width:65px;
+    height:65px;
+    border-radius:18px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    font-size:28px;
+    margin-bottom:15px;
+}
+
+.bg-green{
+    background:#16a34a;
+}
+
+.bg-red{
+    background:#dc2626;
+}
+
+.bg-blue{
+    background:#2563eb;
+}
+
+.card-finanza p{
+    color:#64748b;
+    margin:0;
+}
+
+.card-finanza h2{
+    font-weight:bold;
+    margin-top:10px;
+}
+
+/* PANEL */
+
+.panel{
+    background:white;
+    border-radius:20px;
+    padding:25px;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+    margin-bottom:25px;
+}
+
+.panel h4{
+    font-weight:bold;
+    margin-bottom:20px;
+    color:#0f172a;
+}
+
+/* TABLA */
+
+.table thead{
+    background:#0f172a;
+    color:white;
+}
+
+.table tbody tr:hover{
+    background:#f8fafc;
+}
+
+/* BADGES */
+
+.badge-ingreso{
+    background:#dcfce7;
+    color:#166534;
+    padding:8px 12px;
+    border-radius:10px;
+}
+
+.badge-gasto{
+    background:#fee2e2;
+    color:#991b1b;
+    padding:8px 12px;
+    border-radius:10px;
+}
+
+.badge-utilidad{
+    background:#dbeafe;
+    color:#1d4ed8;
+    padding:8px 12px;
+    border-radius:10px;
+}
+
+/* BOTONES */
+
+.btn-pro{
+    border-radius:12px;
+    padding:10px 20px;
+    font-weight:bold;
+}
+
+</style>
+
 </head>
 
-<body class="p-4">
+<body>
 
-<h2>Estado de Resultados</h2>
-<a href="/dashboard" class="btn btn-secondary mb-3">Volver</a>
+<div class="container py-4 container-resultados">
 
-<div class="card p-3 mb-3">
-    <h5>Resumen</h5>
-    <p><strong>Ingresos:</strong> {{ ingresos }}</p>
-    <p><strong>Gastos:</strong> {{ gastos }}</p>
-    <p><strong>Utilidad Neta:</strong> {{ utilidad }}</p>
-</div>
+    <!-- TOP -->
 
-<div class="table-responsive">
-<table class="table table-bordered">
+    <div class="topbar">
 
-    <thead class="table-dark">
-        <tr>
-            <th>Cuenta</th>
-            <th>Monto</th>
-            <th>Tipo</th>
-        </tr>
-    </thead>
+        <div>
 
-    <tbody>
-        {% for item in resultados %}
-        <tr>
-            <td>{{ item.cuenta }}</td>
-            <td>{{ item.monto }}</td>
-            <td>{{ item.tipo }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-
-</table>
-
-<div class="container mt-4">
-
-    <div class="row g-3">
-
-        <!-- JORNALIZACION -->
-        <div class="col-md-3">
-            <a href="/jornalizacion" class="btn btn-primary w-100 p-3">
-                📘 Jornalización
-            </a>
-        </div>
-
-        <!-- DIARIO MAYOR -->
-        <div class="col-md-3">
-            <a href="/diario_mayor" class="btn btn-success w-100 p-3">
-                📖 Diario Mayor
-            </a>
-        </div>
-
-        <!-- BALANCE DE SALDOS -->
-        <div class="col-md-3">
-            <a href="/balance_saldos" class="btn btn-warning w-100 p-3">
-                📊 Balance de Saldos
-            </a>
-        </div>
-
-
-        <!-- ESTADOS FINANCIEROS -->
-        <div class="col-md-3">
-            <a href="/estados_financieros" class="btn btn-secondary w-100 p-3">
-                📋 Estados Financieros
-            </a>
-        </div>
-
-         <!-- BALANCE GENERAL -->
-        <div class="col-md-3">
-            <a href="/balance_general" class="btn btn-dark w-100 p-3">
-                🏦 Balance General
-            </a>
-        </div>
-    
-
-        <!-- ESTADO RESULTADOS -->
-        <div class="col-md-3">
-            <a href="/estado_resultados" class="btn btn-info w-100 p-3">
+            <h1 class="titulo">
                 📈 Estado de Resultados
-            </a>
+            </h1>
+
+            <p class="subtitulo">
+                Análisis de ingresos, gastos y utilidad neta
+            </p>
+
         </div>
 
-       
+        <div>
 
+            <a href="/dashboard"
+            class="btn btn-secondary btn-pro">
+
+                Dashboard
+
+            </a>
+
+            <a href="/jornalizacion"
+            class="btn btn-primary btn-pro">
+
+                Jornalización
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- RESUMEN -->
+
+    <div class="grid-cards">
+
+        <!-- INGRESOS -->
+
+        <div class="card-finanza">
+
+            <div class="icono bg-green">
+                <i class="fa-solid fa-arrow-trend-up"></i>
+            </div>
+
+            <p>Total Ingresos</p>
+
+            <h2 class="text-success">
+                Q {{ ingresos }}
+            </h2>
+
+        </div>
+
+        <!-- GASTOS -->
+
+        <div class="card-finanza">
+
+            <div class="icono bg-red">
+                <i class="fa-solid fa-arrow-trend-down"></i>
+            </div>
+
+            <p>Total Gastos</p>
+
+            <h2 class="text-danger">
+                Q {{ gastos }}
+            </h2>
+
+        </div>
+
+        <!-- UTILIDAD -->
+
+        <div class="card-finanza">
+
+            <div class="icono bg-blue">
+                <i class="fa-solid fa-wallet"></i>
+            </div>
+
+            <p>Utilidad Neta</p>
+
+            <h2 class="text-primary">
+                Q {{ utilidad }}
+            </h2>
+
+        </div>
+
+    </div>
+
+    <!-- TABLA -->
+
+    <div class="panel">
+
+        <h4>
+            📊 Resumen del Estado de Resultados
+        </h4>
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle">
+
+                <thead>
+
+                    <tr>
+                        <th>Concepto</th>
+                        <th>Monto</th>
+                        <th>Clasificación</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+
+                        <td>
+                            Ingresos Totales
+                        </td>
+
+                        <td class="text-success">
+                            Q {{ ingresos }}
+                        </td>
+
+                        <td>
+                            <span class="badge-ingreso">
+                                Ganancia
+                            </span>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>
+                            Gastos Totales
+                        </td>
+
+                        <td class="text-danger">
+                            Q {{ gastos }}
+                        </td>
+
+                        <td>
+                            <span class="badge-gasto">
+                                Egreso
+                            </span>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>
+                            Utilidad Neta
+                        </td>
+
+                        <td class="text-primary">
+                            Q {{ utilidad }}
+                        </td>
+
+                        <td>
+                            <span class="badge-utilidad">
+                                Resultado Final
+                            </span>
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <!-- ANALISIS -->
+
+    <div class="panel">
+
+        <h4>
+            🧠 Análisis Financiero
+        </h4>
+
+        {% if utilidad > 0 %}
+
+        <div class="alert alert-success">
+
+            <strong>
+                Excelente:
+            </strong>
+
+            La empresa presenta ganancias positivas y estabilidad financiera.
+
+        </div>
+
+        {% elif utilidad < 0 %}
+
+        <div class="alert alert-danger">
+
+            <strong>
+                Atención:
+            </strong>
+
+            La empresa presenta pérdidas. Se recomienda revisar gastos.
+
+        </div>
+
+        {% else %}
+
+        <div class="alert alert-warning">
+
+            <strong>
+                Neutral:
+            </strong>
+
+            No existen ganancias ni pérdidas actualmente.
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+   <div class="row g-4 mt-4">
+
+    <div class="col-md-2">
+        <a href="/jornalizacion"
+        class="btn btn-primary w-100 btn-acceso py-3">
+            📚 Jornalización
+        </a>
+    </div>
+
+    <div class="col-md-2">
+        <a href="/balance"
+        class="btn btn-success w-100 btn-acceso py-3">
+            📊 Balance
+        </a>
+    </div>
+
+    <div class="col-md-2">
+        <a href="/diario_mayor"
+        class="btn btn-warning text-white w-100 btn-acceso py-3">
+            📖 Diario Mayor
+        </a>
+    </div>
+
+    <div class="col-md-3">
+        <a href="/balance_general"
+        class="btn btn-danger w-100 btn-acceso py-3">
+            💼 Balance General
+        </a>
+    </div>
+
+    <div class="col-md-3">
+        <a href="/estados_financieros"
+        class="btn btn-info text-white w-100 btn-acceso py-3">
+            📑 Estados Financieros
+        </a>
     </div>
 
 </div>
 
 </body>
+
 </html>
