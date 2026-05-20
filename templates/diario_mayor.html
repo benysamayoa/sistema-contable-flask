@@ -1,209 +1,128 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-<meta charset="UTF-8">
-<title>Diario Mayor</title>
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<style>
-
-body{
-    background:#f1f5f9;
-    font-family:Arial;
-}
-
-.contenedor{
-    max-width:1200px;
-    margin:auto;
-}
-
-.card-box{
-    background:white;
-    border:none;
-    border-radius:20px;
-    box-shadow:0 5px 20px rgba(0,0,0,.08);
-}
-
-thead{
-    background:#1e3a8a;
-    color:white;
-}
-
-.saldo-pos{color:green;font-weight:bold;}
-.saldo-neg{color:red;font-weight:bold;}
-
-.topbar{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:20px;
-}
-
-.filtros{
-    background:white;
-    padding:15px;
-    border-radius:15px;
-    box-shadow:0 5px 15px rgba(0,0,0,.05);
-    margin-bottom:20px;
-}
-
-</style>
+    <meta charset="UTF-8">
+    <title>Libro Mayor General</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f4f6f9; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .card-minimal { border: none; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); background: white; }
+        .table-custom th { background-color: #212529; color: white; font-weight: 600; }
+    </style>
 </head>
+<body class="p-4">
 
-<body>
+    <div class="container" style="max-width: 1050px;">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold m-0 text-secondary">📖 Libro Mayor General</h2>
+            <a href="/jornalizacion" class="btn btn-sm btn-outline-secondary">← Volver a Jornalización</a>
+        </div>
 
-<div class="container py-4 contenedor">
+        <div class="card card-minimal p-4 mb-4">
+            <h5 class="fw-bold text-dark mb-3">🔍 Filtro de Cuenta y Período Mensual</h5>
+            <form method="GET" action="/diario_mayor" class="row g-3">
+                <div class="col-md-3">
+                    <label class="form-label small text-muted fw-bold">Año Contable</label>
+                    <select name="anio" class="form-select" required>
+                        <option value="2026" {% if anio_sel == '2026' %}selected{% endif %}>2026</option>
+                        <option value="2025" {% if anio_sel == '2025' %}selected{% endif %}>2025</option>
+                        <option value="2027" {% if anio_sel == '2027' %}selected{% endif %}>2027</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label small text-muted fw-bold">Mes</label>
+                    <select name="mes" class="form-select" required>
+                        <option value="01" {% if mes_sel == '01' %}selected{% endif %}>Enero</option>
+                        <option value="02" {% if mes_sel == '02' %}selected{% endif %}>Febrero</option>
+                        <option value="03" {% if mes_sel == '03' %}selected{% endif %}>Marzo</option>
+                        <option value="04" {% if mes_sel == '04' %}selected{% endif %}>Abril</option>
+                        <option value="05" {% if mes_sel == '05' %}selected{% endif %}>Mayo</option>
+                        <option value="06" {% if mes_sel == '06' %}selected{% endif %}>Junio</option>
+                        <option value="07" {% if mes_sel == '07' %}selected{% endif %}>Julio</option>
+                        <option value="08" {% if mes_sel == '08' %}selected{% endif %}>Agosto</option>
+                        <option value="09" {% if mes_sel == '09' %}selected{% endif %}>Septiembre</option>
+                        <option value="10" {% if mes_sel == '10' %}selected{% endif %}>Octubre</option>
+                        <option value="11" {% if mes_sel == '11' %}selected{% endif %}>Noviembre</option>
+                        <option value="12" {% if mes_sel == '12' %}selected{% endif %}>Diciembre</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label small text-muted fw-bold">Seleccionar Cuenta Contable</label>
+                    <select name="cuenta" class="form-select" required>
+                        <option value="">-- Elegir cuenta --</option>
+                        {% for c in cuentas %}
+                            <option value="{{ c }}" {% if cuenta_sel == c %}selected{% endif %}>{{ c }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    <button type="submit" class="btn btn-dark w-100">📊 Consultar</button>
+                </div>
+            </form>
+        </div>
 
-<!-- TOP -->
-<div class="topbar">
+        {% if cuenta_sel and movimientos %}
+            <div class="row g-3 mb-4">
+                <div class="col-md-4">
+                    <div class="card card-minimal p-3 text-center border-start border-success border-4">
+                        <span class="text-muted small fw-bold text-uppercase">Total Cargos (Debe)</span>
+                        <h3 class="fw-bold text-success mt-1">Q{{ "%.2f"|format(total_debe) }}</h3>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card card-minimal p-3 text-center border-start border-danger border-4">
+                        <span class="text-muted small fw-bold text-uppercase">Total Abonos (Haber)</span>
+                        <h3 class="fw-bold text-danger mt-1">Q{{ "%.2f"|format(total_haber) }}</h3>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card card-minimal p-3 text-center border-start border-primary border-4">
+                        <span class="text-muted small fw-bold text-uppercase">Saldo Neto del Período</span>
+                        <h3 class="fw-bold text-primary mt-1">Q{{ "%.2f"|format(saldo) }}</h3>
+                    </div>
+                </div>
+            </div>
 
-<h2>📒 Diario Mayor</h2>
-
-<div>
-<a href="/dashboard" class="btn btn-secondary">Dashboard</a>
-</div>
-
-</div>
-
-<!-- FILTROS -->
-<form method="GET" action="/diario_mayor" class="filtros row g-2">
-
-<div class="col-md-3">
-<label>Fecha</label>
-<input type="date" name="fecha" class="form-control">
-</div>
-
-<div class="col-md-3">
-<label>Mes (YYYY-MM)</label>
-<input type="month" name="mes" class="form-control">
-</div>
-
-<div class="col-md-3">
-<label>Año</label>
-<input type="number" name="anio" class="form-control" placeholder="2026">
-</div>
-
-<div class="col-md-3 d-flex align-items-end">
-<button class="btn btn-primary w-100">Filtrar</button>
-</div>
-
-</form>
-
-<!-- RESUMEN -->
-<div class="row mb-3">
-
-<div class="col-md-6">
-<div class="card-box p-3">
-<h5>Total Debe</h5>
-<h3 class="text-success">
-Q {{ diario | sum(attribute=3) }}
-</h3>
-</div>
-</div>
-
-<div class="col-md-6">
-<div class="card-box p-3">
-<h5>Total Haber</h5>
-<h3 class="text-danger">
-Q {{ diario | sum(attribute=4) }}
-</h3>
-</div>
-</div>
-
-</div>
-
-<!-- TABLA -->
-<div class="card-box p-4">
-
-<table class="table table-hover">
-
-<thead>
-<tr>
-<th>ID</th>
-<th>Fecha</th>
-<th>Cuenta</th>
-<th>Debe</th>
-<th>Haber</th>
-<th>Descripción</th>
-</tr>
-</thead>
-
-<tbody>
-
-{% for d in diario %}
-<tr>
-<td>{{ d[0] }}</td>
-<td>{{ d[1] }}</td>
-<td><b>{{ d[2] }}</b></td>
-<td class="text-success">Q {{ d[3] }}</td>
-<td class="text-danger">Q {{ d[4] }}</td>
-<td>{{ d[5] }}</td>
-</tr>
-{% endfor %}
-
-</tbody>
-
-</table>
-
-</div>
-
-</div>
-
-<div class="row g-4 mt-4">
-
-<div class="col-md-2">
-        <a href="/jornalizacion"
-        class="btn btn-primary w-100 btn-acceso py-3">
-            📚 Jornalización
-        </a>
+            <div class="card card-minimal p-4">
+                <h5 class="fw-bold text-secondary mb-3">
+                    Historial del Mayor: <span class="text-dark">{{ cuenta_sel }}</span> ({{ meses_map[mes_sel] }} {{ anio_sel }})
+                </h5>
+                <table class="table table-striped table-hover table-custom align-middle">
+                    <thead>
+                        <tr>
+                            <th style="width: 12%;">Fecha</th>
+                            <th style="width: 12%;">No. Partida</th>
+                            <th style="width: 46%;">Descripción / Concepto</th>
+                            <th class="text-end" style="width: 15%;">Debe (Q)</th>
+                            <th class="text-end" style="width: 15%;">Haber (Q)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for m in movimientos %}
+                        <tr>
+                            <td>{{ m.fecha }}</td>
+                            <td class="font-monospace fw-bold text-center">#{{ m.partida }}</td>
+                            <td>{{ m.descripcion }}</td>
+                            <td class="text-end text-success">{% if m.debe > 0 %}Q{{ "%.2f"|format(m.debe) }}{% else %}-{% endif %}</td>
+                            <td class="text-end text-danger">{% if m.haber > 0 %}Q{{ "%.2f"|format(m.haber) }}{% else %}-{% endif %}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot class="table-dark fw-bold">
+                        <tr>
+                            <td colspan="3" class="text-end">Sumas Totales del Período:</td>
+                            <td class="text-end text-white">Q{{ "%.2f"|format(total_debe) }}</td>
+                            <td class="text-end text-white">Q{{ "%.2f"|format(total_haber) }}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        {% elif cuenta_sel %}
+            <div class="alert alert-warning text-center">La cuenta <strong>{{ cuenta_sel }}</strong> no registra ningún movimiento contable para el período de {{ meses_map[mes_sel] }} {{ anio_sel }}.</div>
+        {% else %}
+            <div class="alert alert-info text-center shadow-sm">Selecciona los parámetros de búsqueda en la parte superior para desplegar los folios del Libro Mayor General.</div>
+        {% endif %}
     </div>
-
-
-
-
-    <div class="col-md-2">
-        <a href="/balance"
-        class="btn btn-success w-100 btn-acceso py-3">
-            📊 Balance
-        </a>
-    </div>
-
-    
-
-    <div class="col-md-2">
-        <a href="/balance_general"
-        class="btn btn-danger w-100 btn-acceso py-3">
-            💼 Balance General
-        </a>
-    </div>
-
-    <div class="col-md-3">
-        <a href="/estado_resultados"
-        class="btn btn-dark w-100 btn-acceso py-3">
-            📈 Estado Resultados
-        </a>
-    </div>
-
-    <div class="col-md-3">
-        <a href="/estados_financieros"
-        class="btn btn-info text-white w-100 btn-acceso py-3">
-            📑 Estados Financieros
-        </a>
-    </div>
-
-</div>
-
-
-
-
-</body>
-</html>
-
-
-
-
 
 </body>
 </html>

@@ -2,20 +2,23 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Jornalización Minimalista</title>
+    <title>Jornalización - Control de Libros</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body { background-color: #f4f6f9; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         .card-minimal { border: none; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); background: white; }
         .table-sm-custom th { font-weight: 600; color: #495057; background-color: #f8f9fa; }
         .badge-balance { font-size: 0.95rem; padding: 8px 12px; border-radius: 8px; }
+        .year-header-btn { font-weight: 800; font-size: 1.25rem; background-color: #212529 !important; color: #ffffff !important; }
+        .month-header-btn { font-weight: 600; font-size: 1.05rem; background-color: #e9ecef !important; color: #495057 !important; }
+        .btn-action-row { padding: 1px 6px; font-size: 0.75rem; border-radius: 4px; }
     </style>
 </head>
 <body class="p-4">
 
-    <div class="container" style="max-width: 1000px;">
+    <div class="container" style="max-width: 1050px;">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="fw-bold m-0 text-secondary">Jornalización</h2>
+            <h2 class="fw-bold m-0 text-secondary">Módulo de Jornalización</h2>
             <a href="/dashboard" class="btn btn-sm btn-outline-secondary">← Volver al Panel</a>
         </div>
 
@@ -23,7 +26,7 @@
             <h5 class="fw-bold text-primary mb-3">Agregar Cuenta Independiente</h5>
             <div class="row g-2 align-items-center">
                 <div class="col-md-4">
-                    <input type="text" id="input_cuenta" list="lista_cuentas_autocompletar" class="form-control" placeholder="Nombre de la cuenta (Ej: IVA por Cobrar)">
+                    <input type="text" id="input_cuenta" list="lista_cuentas_autocompletar" class="form-control" placeholder="Nombre de la cuenta...">
                 </div>
                 <div class="col-md-2">
                     <input type="text" id="input_tipo" class="form-control" placeholder="Tipo..." readonly style="background-color: #e9ecef; font-weight: bold;">
@@ -42,10 +45,6 @@
                 </div>
             </div>
         </div>
-        
-
-
-        
 
         <div class="card card-minimal p-4 mb-4">
             <h5 class="fw-bold text-secondary mb-3">Estructura de la Partida Actual</h5>
@@ -59,8 +58,7 @@
                         <th class="text-center">Acción</th>
                     </tr>
                 </thead>
-                <tbody id="cuerpo_temporal">
-                    </tbody>
+                <tbody id="cuerpo_temporal"></tbody>
             </table>
 
             <div class="d-flex justify-content-between align-items-center bg-light p-3 rounded-3 mb-3">
@@ -70,51 +68,135 @@
                 </div>
                 <div id="status_cuadre" class="badge-balance badge bg-success">Partida Cuadrada</div>
             </div>
-            
 
             <div class="row g-2">
                 <div class="col-md-3">
                     <input type="date" id="partida_fecha" class="form-control" required>
                 </div>
                 <div class="col-md-6">
-                    <input type="text" id="partida_descripcion" class="form-control" placeholder="Descripción general de la partida..." required>
+                    <input type="text" id="partida_descripcion" class="form-control" placeholder="Descripción o Glosa (Opcional)...">
                 </div>
                 <div class="col-md-3">
-                    <button type="button" id="btn_finalizar_partida" class="btn btn-success w-100">📥 Guardar (DB + Excel)</button>
+                    <button type="button" id="btn_finalizar_partida" class="btn btn-success w-100">📥 Guardar Partida</button>
                 </div>
             </div>
         </div>
 
-        <a href="/ver_jornalizacion" class="btn btn-primary mb-3">
-    Ver partidas guardadas
-</a>
+        <div class="mt-5">
+            <h3 class="fw-bold text-dark mb-4">📖 Historial de Libros Diarios</h3>
 
-        <div class="card card-minimal p-4">
-            <h5 class="fw-bold text-secondary mb-3">Registros en Libro Diario</h5>
-            <table class="table table-striped table-hover">
-                <thead class="table-dark">
-                    <tr>
-                        <th>ID</th>
-                        <th>Fecha</th>
-                        <th>Cuenta</th>
-                        <th class="text-end">Debe</th>
-                        <th class="text-end">Haber</th>
-                        <th>Descripción</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for fila in datos %}
-                    <tr>
-                        <td>{{ fila[0] }}</td>
-                        <td>{{ fila[1] }}</td>
-                        <td>{{ fila[2] }}</td>
-                        <td class="text-end text-success">Q{{ "%.2f"|format(fila[3]) }}</td>
-                        <td class="text-end text-danger">Q{{ "%.2f"|format(fila[4]) }}</td>
-                        <td class="text-muted">{{ fila[5] }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <div class="accordion" id="accordionAniosContables">
+                {% set anios = cronologia.keys() | list | sort(reverse=true) %}
+                {% for anio in anios %}
+                    {% set meses = cronologia[anio] %}
+                    <div class="accordion-item card-minimal mb-3 border-0 overflow-hidden">
+                        <h2 class="accordion-header" id="headingAnio-{{ anio }}">
+                            <button class="accordion-button collapsed year-header-btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAnio-{{ anio }}" aria-expanded="false" aria-controls="collapseAnio-{{ anio }}">
+                                📅 Año Contable: {{ anio }}
+                            </button>
+                        </h2>
+                        
+                        <div id="collapseAnio-{{ anio }}" class="accordion-collapse collapse" aria-labelledby="headingAnio-{{ anio }}" data-bs-parent="#accordionAniosContables">
+                            <div class="accordion-body bg-light p-3">
+                                
+                                <div class="accordion" id="accordionMeses-{{ anio }}">
+                                    {% set meses_keys = meses.keys() | list | sort %}
+                                    {% for mes_cod in meses_keys %}
+                                        {% set mes_data = meses[mes_cod] %}
+                                        <div class="accordion-item mb-2 border-0 rounded-2 overflow-hidden">
+                                            <h3 class="accordion-header" id="headingMes-{{ anio }}-{{ mes_cod }}">
+                                                <button class="accordion-button collapsed month-header-btn d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMes-{{ anio }}-{{ mes_cod }}" aria-expanded="false" aria-controls="collapseMes-{{ anio }}-{{ mes_cod }}">
+                                                    <span>🌙 Período de {{ mes_data.nombre }}</span>
+                                                </button>
+                                            </h3>
+                                            
+                                            <div id="collapseMes-{{ anio }}-{{ mes_cod }}" class="accordion-collapse collapse" aria-labelledby="headingMes-{{ anio }}-{{ mes_cod }}" data-bs-parent="#accordionMeses-{{ anio }}">
+                                                <div class="accordion-body bg-white p-3">
+                                                    
+                                                    <div class="d-flex justify-content-between align-items-center bg-light p-2 rounded mb-3 border">
+                                                        <span class="text-muted small fw-bold">Libro Diario Oficial - {{ mes_data.nombre }} {{ anio }}</span>
+                                                        <a href="/exportar_excel?anio={{ anio }}&mes={{ mes_cod }}" class="btn btn-sm btn-success text-white px-3">
+                                                            📥 Exportar Mes a Excel
+                                                        </a>
+                                                    </div>
+
+                                                    {% set partidas_keys = mes_data.partidas.keys() | list | sort %}
+                                                    {% for num_partida in partidas_keys %}
+                                                        {% set partida_data = mes_data.partidas[num_partida] %}
+                                                        <div class="card card-minimal mb-3 border border-secondary shadow-sm">
+                                                            
+                                                            <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center py-2">
+                                                                <h6 class="m-0 fw-bold">PARTIDA #{{ num_partida }}</h6>
+                                                                <div>
+                                                                    <span class="badge bg-light text-dark font-monospace me-2">Fecha: {{ partida_data.fecha }}</span>
+                                                                    <a href="/eliminar_partida/{{ anio }}/{{ mes_cod }}/{{ num_partida }}" class="btn btn-danger btn-sm py-0 font-monospace text-uppercase" style="font-size: 0.7rem;" onclick="return confirm('¿Eliminar COMPLETAMENTE la partida #{{ num_partida }}?');">✕ Borrar Partida</a>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="card-body p-3">
+                                                                <p class="text-muted mb-2 font-monospace" style="font-size: 0.9rem;">
+                                                                    <strong>Glosa:</strong> {{ partida_data.descripcion }}
+                                                                </p>
+                                                                
+                                                                <table class="table table-sm table-borderless align-middle m-0">
+                                                                    <thead class="border-bottom text-muted" style="font-size: 0.85rem;">
+                                                                        <tr>
+                                                                            <th style="width: 45%;">Cuentas / Descripción</th>
+                                                                            <th class="text-end" style="width: 20%;">Debe (Q)</th>
+                                                                            <th class="text-end" style="width: 20%;">Haber (Q)</th>
+                                                                            <th class="text-center" style="width: 15%;">Acciones</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        {% set ns = namespace(total_debe=0, total_haber=0) %}
+                                                                        {% for mov in partida_data.movimientos %}
+                                                                            {% set ns.total_debe = ns.total_debe + mov.debe %}
+                                                                            {% set ns.total_haber = ns.total_haber + mov.haber %}
+                                                                            <tr>
+                                                                                {% if mov.haber > 0 %}
+                                                                                    <td style="padding-left: 2.5rem; color: #495057;">{{ mov.cuenta }}</td>
+                                                                                {% else %}
+                                                                                    <td><strong>{{ mov.cuenta }}</strong></td>
+                                                                                {% endif %}
+                                                                                <td class="text-end text-success">
+                                                                                    {% if mov.debe > 0 %}Q{{ "%.2f"|format(mov.debe) }}{% else %}-{% endif %}
+                                                                                </td>
+                                                                                <td class="text-end text-danger">
+                                                                                    {% if mov.haber > 0 %}Q{{ "%.2f"|format(mov.haber) }}{% else %}-{% endif %}
+                                                                                </td>
+                                                                                <td class="text-center">
+                                                                                    <div class="btn-group btn-group-sm">
+                                                                                        <a href="/editar/{{ mov.id }}" class="btn btn-outline-warning btn-action-row">✎</a>
+                                                                                        <a href="/eliminar/{{ mov.id }}" class="btn btn-outline-danger btn-action-row" onclick="return confirm('¿Borrar esta línea?');">✕</a>
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        {% endfor %}
+                                                                    </tbody>
+                                                                    <tfoot class="border-top border-dark fw-bold" style="font-size: 0.9rem;">
+                                                                        <tr>
+                                                                            <td class="text-end">Sumas Iguales:</td>
+                                                                            <td class="text-end text-success">Q{{ "%.2f"|format(ns.total_debe) }}</td>
+                                                                            <td class="text-end text-danger">Q{{ "%.2f"|format(ns.total_haber) }}</td>
+                                                                            <td></td>
+                                                                        </tr>
+                                                                    </tfoot>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    {% endfor %}
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 
@@ -127,7 +209,6 @@
     <script>
         let movimientosPartida = [];
 
-        // 1. Detección automática del Tipo de Cuenta desde el CSV
         document.getElementById('input_cuenta').addEventListener('input', function() {
             const nombre = this.value.trim();
             if (nombre.length > 1) {
@@ -139,7 +220,6 @@
             }
         });
 
-        // 2. Agregar cuenta de forma independiente a la lista visual intermedia
         document.getElementById('btn_agregar_lista').addEventListener('click', function() {
             const cuenta = document.getElementById('input_cuenta').value.trim();
             const tipo = document.getElementById('input_tipo').value;
@@ -161,14 +241,12 @@
             movimientosPartida.push(item);
             actualizarTablaTemporal();
 
-            // Limpieza selectiva para agilizar la entrada
             document.getElementById('input_cuenta').value = "";
             document.getElementById('input_tipo').value = "";
             document.getElementById('input_monto').value = "";
             document.getElementById('input_cuenta').focus();
         });
 
-        // 3. Renderizar la tabla intermedia y evaluar cuadre
         function actualizarTablaTemporal() {
             const tbody = document.getElementById('cuerpo_temporal');
             tbody.innerHTML = "";
@@ -196,7 +274,7 @@
                 statusBox.innerText = "Partida Cuadrada";
                 statusBox.className = "badge-balance badge bg-success";
             } else {
-                statusBox.innerText = "⚠️ Las cuentas no cuadran (Permitido guardar)";
+                statusBox.innerText = "⚠️ Las cuentas no cuadran";
                 statusBox.className = "badge-balance badge bg-warning text-dark";
             }
         }
@@ -206,7 +284,6 @@
             actualizarTablaTemporal();
         }
 
-        // 4. Enviar datos completos por AJAX a Flask para guardado definitivo
         document.getElementById('btn_finalizar_partida').addEventListener('click', function() {
             const fecha = document.getElementById('partida_fecha').value;
             const descripcion = document.getElementById('partida_descripcion').value.trim();
@@ -230,7 +307,6 @@
             .then(res => res.json())
             .then(data => {
                 if (data.status === 'success') {
-                    // Limpieza total y recarga de página para ver los cambios reflejados
                     movimientosPartida = [];
                     window.location.reload();
                 } else {
@@ -238,58 +314,18 @@
                 }
             });
         });
-        
 
-        // Setear fecha de hoy por defecto
         document.getElementById('partida_fecha').value = new Date().toISOString().split('T')[0];
     </script>
 
-
-
-
-
-
-<div class="row g-4 mt-4">
-
-    <div class="col-md-2">
-        <a href="/balance"
-        class="btn btn-success w-100 btn-acceso py-3">
-            📊 Balance
-        </a>
+    <div class="row g-4 mt-4 mb-5">
+        <div class="col-md-2"><a href="/balance" class="btn btn-success w-100 py-3">📊 Balance</a></div>
+        <div class="col-md-2"><a href="/diario_mayor" class="btn btn-warning text-white w-100 py-3">📖 Libro Mayor</a></div>
+        <div class="col-md-2"><a href="/balance_general" class="btn btn-danger w-100 py-3">💼 Balance General</a></div>
+        <div class="col-md-3"><a href="/estado_resultados" class="btn btn-dark w-100 py-3">📈 Estado Resultados</a></div>
+        <div class="col-md-3"><a href="/estados_financieros" class="btn btn-info text-white w-100 py-3">📑 Estados Financieros</a></div>
     </div>
 
-    <div class="col-md-2">
-        <a href="/diario_mayor"
-        class="btn btn-warning text-white w-100 btn-acceso py-3">
-            📖 Diario Mayor
-        </a>
-    </div>
-
-    <div class="col-md-2">
-        <a href="/balance_general"
-        class="btn btn-danger w-100 btn-acceso py-3">
-            💼 Balance General
-        </a>
-    </div>
-
-    <div class="col-md-3">
-        <a href="/estado_resultados"
-        class="btn btn-dark w-100 btn-acceso py-3">
-            📈 Estado Resultados
-        </a>
-    </div>
-
-    <div class="col-md-3">
-        <a href="/estados_financieros"
-        class="btn btn-info text-white w-100 btn-acceso py-3">
-            📑 Estados Financieros
-        </a>
-    </div>
-
-</div>
-
-
-
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
