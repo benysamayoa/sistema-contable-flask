@@ -10,19 +10,19 @@
     <style>
 
         body{
-            background:#f1f5f9;
+            background:#f8fafc;
             font-family:Arial, Helvetica, sans-serif;
         }
 
         .contenedor{
-            max-width:1200px;
+            max-width:1300px;
             margin:auto;
         }
 
         .card-balance{
             border:none;
             border-radius:20px;
-            box-shadow:0 5px 20px rgba(0,0,0,.08);
+            box-shadow:0 5px 25px rgba(0,0,0,.08);
             background:white;
         }
 
@@ -40,6 +40,15 @@
             color:white;
         }
 
+        thead th{
+            padding:15px !important;
+        }
+
+        tbody tr:hover{
+            background:#f1f5f9;
+            transition:.2s;
+        }
+
         .saldo-positivo{
             color:#15803d;
             font-weight:bold;
@@ -55,11 +64,13 @@
             justify-content:space-between;
             align-items:center;
             margin-bottom:25px;
+            flex-wrap:wrap;
+            gap:15px;
         }
 
         .resumen{
             display:grid;
-            grid-template-columns:repeat(3,1fr);
+            grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
             gap:20px;
             margin-bottom:25px;
         }
@@ -67,12 +78,13 @@
         .card-resumen{
             background:white;
             border-radius:20px;
-            padding:20px;
+            padding:25px;
             box-shadow:0 5px 20px rgba(0,0,0,.08);
         }
 
         .card-resumen h5{
             color:#64748b;
+            margin-bottom:10px;
         }
 
         .card-resumen h2{
@@ -91,6 +103,38 @@
             color:#2563eb;
         }
 
+        .estado-ok{
+            background:#dcfce7;
+            color:#166534;
+            padding:8px 15px;
+            border-radius:50px;
+            font-weight:bold;
+            display:inline-block;
+        }
+
+        .estado-error{
+            background:#fee2e2;
+            color:#991b1b;
+            padding:8px 15px;
+            border-radius:50px;
+            font-weight:bold;
+            display:inline-block;
+        }
+
+        .btn-acceso{
+            border-radius:14px;
+            font-weight:bold;
+        }
+
+        tfoot{
+            background:#f8fafc;
+            font-weight:bold;
+        }
+
+        .table{
+            margin-bottom:0;
+        }
+
     </style>
 </head>
 
@@ -98,15 +142,21 @@
 
 <div class="container py-4 contenedor">
 
+    {% set total_debe = datos | sum(attribute='debe') %}
+    {% set total_haber = datos | sum(attribute='haber') %}
+    {% set diferencia = total_debe - total_haber %}
+
     <!-- TOP -->
     <div class="topbar">
 
         <div>
             <h1 class="titulo">📊 Balance de Saldos</h1>
-            <p class="subtitulo">Resumen contable general del sistema</p>
+            <p class="subtitulo">
+                Resumen contable general del sistema
+            </p>
         </div>
 
-        <div>
+        <div class="d-flex gap-2 flex-wrap">
 
             <a href="/dashboard" class="btn btn-secondary">
                 Dashboard
@@ -126,28 +176,31 @@
         <div class="card-resumen">
             <h5>Total Debe</h5>
             <h2 class="debe">
-                Q {{ datos | sum(attribute='debe') | round(2) }}
+                Q {{ "{:,.2f}".format(total_debe) }}
             </h2>
         </div>
 
         <div class="card-resumen">
             <h5>Total Haber</h5>
             <h2 class="haber">
-                Q {{ datos | sum(attribute='haber') | round(2) }}
+                Q {{ "{:,.2f}".format(total_haber) }}
             </h2>
         </div>
 
         <div class="card-resumen">
-            <h5>Saldo General</h5>
-            <h2 class="saldo">
-                Q {{
-                    (
-                        (datos | sum(attribute='debe'))
-                        -
-                        (datos | sum(attribute='haber'))
-                    ) | round(2)
-                }}
-            </h2>
+            <h5>Estado del Balance</h5>
+
+            {% if diferencia == 0 %}
+                <div class="estado-ok">
+                    ✅ Balance Cuadrado
+                </div>
+            {% else %}
+                <div class="estado-error">
+                    ❌ Diferencia:
+                    Q {{ "{:,.2f}".format(diferencia) }}
+                </div>
+            {% endif %}
+
         </div>
 
     </div>
@@ -157,9 +210,11 @@
 
         <h3 class="mb-4">📚 Cuentas Contables</h3>
 
+        {% if datos %}
+
         <div class="table-responsive">
 
-            <table class="table table-hover align-middle">
+            <table class="table table-hover table-striped align-middle">
 
                 <thead>
                     <tr>
@@ -176,18 +231,32 @@
 
                     <tr>
 
-                        <td><strong>{{ fila.cuenta }}</strong></td>
+                        <td>
+                            <strong>{{ fila.cuenta }}</strong>
+                        </td>
 
-                        <td class="text-success">Q {{ fila.debe }}</td>
+                        <td class="text-success">
+                            Q {{ "{:,.2f}".format(fila.debe) }}
+                        </td>
 
-                        <td class="text-danger">Q {{ fila.haber }}</td>
+                        <td class="text-danger">
+                            Q {{ "{:,.2f}".format(fila.haber) }}
+                        </td>
 
                         <td>
 
                             {% if fila.saldo >= 0 %}
-                                <span class="saldo-positivo">Q {{ fila.saldo }}</span>
+
+                                <span class="saldo-positivo">
+                                    Q {{ "{:,.2f}".format(fila.saldo) }}
+                                </span>
+
                             {% else %}
-                                <span class="saldo-negativo">Q {{ fila.saldo }}</span>
+
+                                <span class="saldo-negativo">
+                                    Q {{ "{:,.2f}".format(fila.saldo) }}
+                                </span>
+
                             {% endif %}
 
                         </td>
@@ -198,56 +267,79 @@
 
                 </tbody>
 
+                <tfoot>
+                    <tr>
+                        <td>TOTALES</td>
+
+                        <td class="text-success">
+                            Q {{ "{:,.2f}".format(total_debe) }}
+                        </td>
+
+                        <td class="text-danger">
+                            Q {{ "{:,.2f}".format(total_haber) }}
+                        </td>
+
+                        <td class="text-primary">
+                            Q {{ "{:,.2f}".format(diferencia) }}
+                        </td>
+                    </tr>
+                </tfoot>
+
             </table>
 
+        </div>
+
+        {% else %}
+
+        <div class="alert alert-warning text-center">
+            No existen registros contables todavía.
+        </div>
+
+        {% endif %}
+
+    </div>
+
+    <!-- BOTONES -->
+    <div class="row g-3 mt-4">
+
+        <div class="col-md-2">
+            <a href="/jornalizacion"
+            class="btn btn-primary w-100 btn-acceso py-3">
+                📚 Jornalización
+            </a>
+        </div>
+
+        <div class="col-md-2">
+            <a href="/diario_mayor"
+            class="btn btn-warning text-white w-100 btn-acceso py-3">
+                📖 Diario Mayor
+            </a>
+        </div>
+
+        <div class="col-md-2">
+            <a href="/balance_general"
+            class="btn btn-danger w-100 btn-acceso py-3">
+                💼 Balance General
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a href="/estado_resultados"
+            class="btn btn-dark w-100 btn-acceso py-3">
+                📈 Estado Resultados
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a href="/estados_financieros"
+            class="btn btn-info text-white w-100 btn-acceso py-3">
+                📑 Estados Financieros
+            </a>
         </div>
 
     </div>
 
 </div>
 
-<div class="row g-4 mt-4">
-
-    <div class="col-md-2">
-        <a href="/jornalizacion"
-        class="btn btn-primary w-100 btn-acceso py-3">
-            📚 Jornalización
-        </a>
-    </div>
-
-    <div class="col-md-2">
-        <a href="/diario_mayor"
-        class="btn btn-warning text-white w-100 btn-acceso py-3">
-            📖 Diario Mayor
-        </a>
-    </div>
-
-    <div class="col-md-2">
-        <a href="/balance_general"
-        class="btn btn-danger w-100 btn-acceso py-3">
-            💼 Balance General
-        </a>
-    </div>
-
-    <div class="col-md-3">
-        <a href="/estado_resultados"
-        class="btn btn-dark w-100 btn-acceso py-3">
-            📈 Estado Resultados
-        </a>
-    </div>
-
-    <div class="col-md-3">
-        <a href="/estados_financieros"
-        class="btn btn-info text-white w-100 btn-acceso py-3">
-            📑 Estados Financieros
-        </a>
-    </div>
-
-</div>
-
-
-
-
 </body>
 </html>
-
